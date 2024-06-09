@@ -1,0 +1,6 @@
+@model IEnumerable<EnglishWordsLearning.Models.Word>
+
+@foreach (var word in Model)
+{
+    <p>@word.Russian - @word.English (@word.Level)</p>
+}
