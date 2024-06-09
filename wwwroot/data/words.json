@@ -1,17 +1,44 @@
 [
   {
-    "Russian": "яблоко",
+    "Id": 0,
     "English": "apple",
+    "Russian": "яблоко",
     "Level": "A1"
   },
   {
-    "Russian": "стол",
+    "Id": 0,
+    "English": "milk",
+    "Russian": "молоко",
+    "Level": "A1"
+  },
+  {
+    "Id": 0,
+    "English": "book",
+    "Russian": "книга",
+    "Level": "A2"
+  },
+  {
+    "Id": 0,
     "English": "table",
-    "Level": "A1"
+    "Russian": "стол",
+    "Level": "A2"
   },
   {
-    "Russian": "собака",
-    "English": "dog",
+    "Id": 0,
+    "English": "work",
+    "Russian": "работа",
+    "Level": "B1"
+  },
+  {
+    "Id": 0,
+    "English": "travel",
+    "Russian": "путешествие",
+    "Level": "B1"
+  },
+  {
+    "Id": 0,
+    "English": "ball",
+    "Russian": "мяч",
     "Level": "A2"
   }
 ]

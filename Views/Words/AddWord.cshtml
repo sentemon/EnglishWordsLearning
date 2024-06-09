@@ -1,17 +1,19 @@
 @model EnglishWordsLearning.Models.Word
 
+<h2>Add Word</h2>
+
 <form asp-action="AddWord" method="post">
     <div>
-        <label>Russian</label>
-        <input asp-for="Russian" />
+        <label for="russian">Russian Word</label>
+        <input type="text" id="russian" asp-for="Russian" />
     </div>
     <div>
-        <label>English</label>
-        <input asp-for="English" />
+        <label for="english">English Word</label>
+        <input type="text" id="english" asp-for="English" />
     </div>
     <div>
-        <label>Level</label>
-        <input asp-for="Level" />
+        <label for="level">Level</label>
+        <input type="text" id="level" asp-for="Level" />
     </div>
     <button type="submit">Add Word</button>
 </form>

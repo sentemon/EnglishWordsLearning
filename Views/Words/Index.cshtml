@@ -1,6 +1,13 @@
+@{
+    ViewData["Title"] = "Words";
+}
 @model IEnumerable<EnglishWordsLearning.Models.Word>
+
+<h2>Words</h2>
 
 @foreach (var word in Model)
 {
     <p>@word.Russian - @word.English (@word.Level)</p>
 }
+
+<a asp-action="AddWord">Add New Word</a>
