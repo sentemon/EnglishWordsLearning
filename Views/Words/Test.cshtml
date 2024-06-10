@@ -1,0 +1,31 @@
+@model EnglishWordsLearning.Models.Word
+
+@{
+    ViewData["Title"] = "Test";
+}
+
+<h2>Translate the word</h2>
+
+@if (ViewBag.Result != null)
+{
+    if (ViewBag.Result == "Correct!")
+    {
+        <p style="color: green">@ViewBag.Result</p>
+    }
+    else
+    {
+        <p style="color: red">@ViewBag.Result</p>
+    }
+}
+
+<form asp-action="Test" method="post">
+    <div>
+        <label for="russian">Russian Word</label>
+        <input type="text" id="russian" name="russian" value="@Model.Russian" readonly />
+    </div>
+    <div>
+        <label for="userTranslation">Your Translation</label>
+        <input type="text" id="userTranslation" name="userTranslation" />
+    </div>
+    <button type="submit">Check Translation</button>
+</form>

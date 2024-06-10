@@ -50,7 +50,34 @@ namespace EnglishWordsLearning.Controllers
 
                 return RedirectToAction("Index");
             }
+            
             return View(word);
+        }
+
+        public async Task<IActionResult> Test()
+        {
+            var words = await LoadWordsAsync();
+            var randomWord = words.OrderBy(w => Guid.NewGuid()).FirstOrDefault();
+            return View(randomWord);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Test(string russian, string userTranslation)
+        {
+            var words = await LoadWordsAsync();
+            var word = words.FirstOrDefault(w => w.Russian == russian);
+
+            if (word != null && word.English.Equals(userTranslation, StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.Result = "Correct!";
+            }
+            else
+            {
+                ViewBag.Result = "Incorrect. The correct translation is: " + (word?.English ?? "Unknown");
+            }
+
+            var randomWord = words.OrderBy(w => Guid.NewGuid()).FirstOrDefault();
+            return View(randomWord);
         }
     }
 }

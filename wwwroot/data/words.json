@@ -40,5 +40,11 @@
     "English": "ball",
     "Russian": "мяч",
     "Level": "A2"
+  },
+  {
+    "Id": 0,
+    "English": "kiss",
+    "Russian": "поцелуй",
+    "Level": "A2"
   }
 ]
