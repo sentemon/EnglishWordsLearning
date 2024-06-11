@@ -67,8 +67,17 @@ namespace EnglishWordsLearning.Controllers
             var words = await LoadWordsAsync();
             var word = words.FirstOrDefault(w => w.Russian == russian);
 
+            // Get correct answers from session
+            int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
+            int totalQuestions = HttpContext.Session.GetInt32("totalQuestions") ?? 0;
+
+            // Increment total questions
+            totalQuestions++;
+
+            // Check the user's translation
             if (word != null && word.English.Equals(userTranslation, StringComparison.OrdinalIgnoreCase))
             {
+                correctAnswers++;
                 ViewBag.Result = "Correct!";
             }
             else
@@ -76,8 +85,18 @@ namespace EnglishWordsLearning.Controllers
                 ViewBag.Result = "Incorrect. The correct translation is: " + (word?.English ?? "Unknown");
             }
 
+            // Save correct answers and total questions back to session
+            HttpContext.Session.SetInt32("correctAnswers", correctAnswers);
+            HttpContext.Session.SetInt32("totalQuestions", totalQuestions);
+
+            // Select a new random word
             var randomWord = words.OrderBy(w => Guid.NewGuid()).FirstOrDefault();
+
+            // Pass the result and count to the view
+            ViewBag.CorrectAnswers = correctAnswers;
+            ViewBag.TotalQuestions = totalQuestions;
             return View(randomWord);
         }
+
     }
 }
