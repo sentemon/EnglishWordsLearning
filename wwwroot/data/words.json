@@ -46,5 +46,17 @@
     "English": "kiss",
     "Russian": "поцелуй",
     "Level": "A2"
+  },
+  {
+    "Id": 0,
+    "English": "come",
+    "Russian": "приходить",
+    "Level": "A1"
+  },
+  {
+    "Id": 0,
+    "English": "iron",
+    "Russian": "железо",
+    "Level": "B1"
   }
 ]
