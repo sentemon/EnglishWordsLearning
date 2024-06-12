@@ -64,5 +64,23 @@
     "English": "well",
     "Russian": "хорошо",
     "Level": "A1"
+  },
+  {
+    "Id": 0,
+    "English": "role",
+    "Russian": "роль",
+    "Level": "B1"
+  },
+  {
+    "Id": 0,
+    "English": "watch",
+    "Russian": "часы",
+    "Level": "A2"
+  },
+  {
+    "Id": 0,
+    "English": "ephemeral",
+    "Russian": "эфемерный",
+    "Level": "C2"
   }
 ]
