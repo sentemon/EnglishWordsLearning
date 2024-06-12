@@ -1,6 +1,6 @@
 namespace EnglishWordsLearning.Models;
 
-public class Word
+public class WordViewModel
 {
     public int Id { get; set; }
     public string English { get; set; }

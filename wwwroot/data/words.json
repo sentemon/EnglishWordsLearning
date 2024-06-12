@@ -58,5 +58,11 @@
     "English": "iron",
     "Russian": "железо",
     "Level": "B1"
+  },
+  {
+    "Id": 0,
+    "English": "well",
+    "Russian": "хорошо",
+    "Level": "A1"
   }
 ]
