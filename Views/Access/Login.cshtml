@@ -1,0 +1,35 @@
+@model EnglishWordsLearning.Models.LoginViewModel;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+<form asp-controller="Access" asp-action="Login" method="post">
+    <h1>Login</h1>
+    <input type="email" placeholder="Email" asp-for="Email"/>
+    <input type="password" placeholder="Password" asp-for="Password"/>
+    
+    <label>
+        <input type="checkbox" asp-for="KeepLoggedIn"/>
+        Keep me logged In.
+    </label>
+    <button type="submit">Login</button>
+    
+    @if (ViewData["ValidateMessage"] != null)
+    {
+        <br/>
+        <label>@ViewData["ValidateMessage"]</label>
+    }
+
+</form>
+
+</body>
+</html>
