@@ -20,3 +20,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+
+}
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
