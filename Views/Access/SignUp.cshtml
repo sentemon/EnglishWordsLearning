@@ -1,18 +1,29 @@
-@model dynamic
-
-@{
-    Layout = null;
-}
+@model EnglishWordsLearning.Models.SignInViewModel;
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sign Up</title>
 </head>
 <body>
-<div>
-      
-</div>
+<form asp-controller="Access" asp-action="SignUp" method="post">
+    <h1>Sign Up</h1>
+    <input type="username" placeholder="Username" asp-for="Username"/>
+    <input type="password" placeholder="Password" asp-for="Password"/>
+    <input type="password" placeholder="Password2" asp-for="Password"/>
+    
+    
+    <button type="submit">Sign Up</button>
+    
+    @if (ViewData["ValidateMessage"] != null)
+    {
+        <br/>
+        <label>@ViewData["ValidateMessage"]</label>
+    }
+
+</form>
+
 </body>
 </html>

@@ -82,5 +82,11 @@
     "English": "ephemeral",
     "Russian": "эфемерный",
     "Level": "C2"
+  },
+  {
+    "Id": 0,
+    "English": "dog",
+    "Russian": "собака",
+    "Level": "A1"
   }
 ]

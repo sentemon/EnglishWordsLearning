@@ -9,11 +9,11 @@ namespace EnglishWordsLearning.Controllers;
 public class AccessController : Controller
 {
     // GET
-    public IActionResult Login()
+    public IActionResult SignIn()
     {
         ClaimsPrincipal claimsUser = HttpContext.User;
 
-        if (claimsUser.Identity.IsAuthenticated)
+        if (claimsUser.Identity != null && claimsUser.Identity.IsAuthenticated)
         {
             return RedirectToAction("Index", "Home");
         }
@@ -22,7 +22,7 @@ public class AccessController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel modelLogin)
+    public async Task<IActionResult> SignIn(SignInViewModel modelLogin)
     {
         if (modelLogin.Username == "admin" &&
             modelLogin.Password == "admin")
@@ -49,6 +49,11 @@ public class AccessController : Controller
         }
 
         ViewData["ValidateMessage"] = "user not found";
+        return View();
+    }
+
+    public IActionResult SignUp()
+    {
         return View();
     }
 }

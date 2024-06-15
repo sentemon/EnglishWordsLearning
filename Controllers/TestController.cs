@@ -14,7 +14,7 @@ public class TestController : Controller
         using (var reader = new StreamReader(_jsonFilePath))
         {
             var json = await reader.ReadToEndAsync();
-            return JsonConvert.DeserializeObject<List<WordViewModel>>(json);
+            return JsonConvert.DeserializeObject<List<WordViewModel>>(json)!;
         }
     }
     

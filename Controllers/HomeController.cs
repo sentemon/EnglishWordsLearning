@@ -22,10 +22,10 @@ public class HomeController : Controller
         return View();
     }
     
-    public async Task<IActionResult> LogOut()
+    public new async Task<IActionResult> SignOut()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Login", "Access");
+        return RedirectToAction("SignIn", "Access");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
