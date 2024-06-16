@@ -56,4 +56,17 @@ public class AccessController : Controller
     {
         return View();
     }
+    
+    [HttpPost]
+    public IActionResult SignUp(SignUpViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            
+        }
+
+        ViewData["ValidateMessage"] = "Please correct the errors and try again.";
+        return View(model);
+    }
+
 }
