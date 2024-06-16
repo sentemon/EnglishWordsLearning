@@ -3,31 +3,37 @@
 @{
     ViewData["Title"] = "Test";
 }
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<h2>Translate the word</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Translate the word</h2>
+            @if (ViewBag.Result != null)
+            {
+                <p class="text-center" style="color: @(ViewBag.Result == "Correct!" ? "green" : "red")">@ViewBag.Result</p>
+            }
 
-@if (ViewBag.Result != null)
-{
-    if (ViewBag.Result == "Correct!")
-    {
-        <p style="color: green">@ViewBag.Result</p>
-    }
-    else
-    {
-        <p style="color: red">@ViewBag.Result</p>
-    }
-}
+            <p class="text-center">Your result is @ViewBag.CorrectAnswers / @ViewBag.TotalQuestions</p>
 
-<p>Your result is @ViewBag.CorrectAnswers / @ViewBag.TotalQuestions</p>
+            <form asp-controller="Test" asp-action="Test" method="post" id="translationForm">
+                <div class="form-group">
+                    <label for="russian">Russian Word</label>
+                    <input type="text" class="form-control" id="russian" name="russian" value="@Model.Russian" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="userTranslation">Your Translation</label>
+                    <input type="text" class="form-control" id="userTranslation" name="userTranslation" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Check Translation</button>
+            </form>
 
-<form asp-action="Test" method="post">
-    <div>
-        <label for="russian">Russian Word</label>
-        <input type="text" id="russian" name="russian" value="@Model.Russian" readonly />
+            @if (ViewData["ValidateMessage"] != null)
+            {
+                <div class="alert alert-danger mt-3">@ViewData["ValidateMessage"]</div>
+            }
+        </div>
     </div>
-    <div>
-        <label for="userTranslation">Your Translation</label>
-        <input type="text" id="userTranslation" name="userTranslation" />
-    </div>
-    <button type="submit">Check Translation</button>
-</form>
+</div>
+
+<script src="js/site.js"></script>
