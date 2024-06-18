@@ -44,6 +44,7 @@ namespace EnglishWordsLearning.Controllers
         {
             if (ModelState.IsValid)
             {
+                wordViewModel.Id = Guid.NewGuid();
                 var words = await LoadWordsAsync();
                 words.Add(wordViewModel);
 
@@ -55,6 +56,25 @@ namespace EnglishWordsLearning.Controllers
             }
             
             return View(wordViewModel);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> RemoveWord(Guid id)
+        {
+            var words = await LoadWordsAsync();
+            var wordToRemove = words.FirstOrDefault(w => w.Id == id);
+            if (wordToRemove != null)
+            {
+                words.Remove(wordToRemove);
+
+                // Save updated words back to the file
+                var json = JsonConvert.SerializeObject(words, Formatting.Indented);
+                await System.IO.File.WriteAllTextAsync(_jsonFilePath, json);
+
+                return RedirectToAction("Index");
+            }
+
+            return NotFound();
         }
 
     }

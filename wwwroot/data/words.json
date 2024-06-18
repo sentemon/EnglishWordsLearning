@@ -1,92 +1,20 @@
 [
   {
-    "Id": 0,
+    "Id": "bb7ecb9a-867a-4b62-a875-d0fb1509cd29",
     "English": "apple",
     "Russian": "яблоко",
     "Level": "A1"
   },
   {
-    "Id": 0,
-    "English": "milk",
-    "Russian": "молоко",
+    "Id": "5a06542c-9648-47d8-a299-778c4bb51f9f",
+    "English": "ball",
+    "Russian": "мяч",
     "Level": "A1"
   },
   {
-    "Id": 0,
-    "English": "book",
-    "Russian": "книга",
-    "Level": "A2"
-  },
-  {
-    "Id": 0,
-    "English": "table",
-    "Russian": "стол",
-    "Level": "A2"
-  },
-  {
-    "Id": 0,
-    "English": "work",
-    "Russian": "работа",
-    "Level": "B1"
-  },
-  {
-    "Id": 0,
-    "English": "travel",
-    "Russian": "путешествие",
-    "Level": "B1"
-  },
-  {
-    "Id": 0,
-    "English": "ball",
-    "Russian": "мяч",
-    "Level": "A2"
-  },
-  {
-    "Id": 0,
+    "Id": "71ecd1ae-875c-4f52-ba9e-1131cb49550f",
     "English": "kiss",
     "Russian": "поцелуй",
     "Level": "A2"
-  },
-  {
-    "Id": 0,
-    "English": "come",
-    "Russian": "приходить",
-    "Level": "A1"
-  },
-  {
-    "Id": 0,
-    "English": "iron",
-    "Russian": "железо",
-    "Level": "B1"
-  },
-  {
-    "Id": 0,
-    "English": "well",
-    "Russian": "хорошо",
-    "Level": "A1"
-  },
-  {
-    "Id": 0,
-    "English": "role",
-    "Russian": "роль",
-    "Level": "B1"
-  },
-  {
-    "Id": 0,
-    "English": "watch",
-    "Russian": "часы",
-    "Level": "A2"
-  },
-  {
-    "Id": 0,
-    "English": "ephemeral",
-    "Russian": "эфемерный",
-    "Level": "C2"
-  },
-  {
-    "Id": 0,
-    "English": "dog",
-    "Russian": "собака",
-    "Level": "A1"
   }
 ]
