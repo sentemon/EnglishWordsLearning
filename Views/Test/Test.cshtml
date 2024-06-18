@@ -13,8 +13,11 @@
             {
                 <p class="text-center" style="color: @(ViewBag.Result == "Correct!" ? "green" : "red")">@ViewBag.Result</p>
             }
-
-            <p class="text-center">Your result is @ViewBag.CorrectAnswers / @ViewBag.TotalQuestions</p>
+            
+            @if (ViewBag.TotalQuestions > 0)
+            {
+                <p class="text-center">Your result is @ViewBag.CorrectAnswers / @ViewBag.TotalQuestions  |  (@Math.Round(((double)ViewBag.CorrectAnswers / (double)ViewBag.TotalQuestions * 100), 2)%)</p>
+            }
 
             <form asp-controller="Test" asp-action="Test" method="post" id="translationForm">
                 <div class="form-group">

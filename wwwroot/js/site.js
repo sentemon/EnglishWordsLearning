@@ -14,5 +14,5 @@ window.onload = setFocus;
 
 // Set focus after the form is submitted
 document.getElementById("translationForm").onsubmit = function() {
-    setTimeout(setFocus, 10); // Slight delay to ensure the form submission is processed first
+    setTimeout(setFocus); // Slight delay to ensure the form submission is processed first
 };
