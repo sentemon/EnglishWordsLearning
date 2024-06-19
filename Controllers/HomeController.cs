@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 
 
 namespace EnglishWordsLearning.Controllers;

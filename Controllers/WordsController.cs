@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Threading.Tasks;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authorization;
 
