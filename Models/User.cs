@@ -4,6 +4,8 @@ namespace EnglishWordsLearning.Models
 {
     public class User
     {
+        public Guid Id { get; set; }
+        
         [Required(ErrorMessage = "Username is required")]
         public required string Username { get; set; }
 

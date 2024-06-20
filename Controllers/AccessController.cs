@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,9 +11,11 @@ namespace EnglishWordsLearning.Controllers
     public class AccessController : Controller
     {
         private readonly string _usersFilePath;
+        private readonly AppDbContext _appDbContext;
 
-        public AccessController()
+        public AccessController(AppDbContext appDbContext)
         {
+            _appDbContext = appDbContext;
             _usersFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "users.json");
         }
 
@@ -86,12 +89,15 @@ namespace EnglishWordsLearning.Controllers
                     // Create a new user
                     User newUser = new User
                     {
+                        Id = Guid.NewGuid(),
                         Username = model.Username,
                         Password = HashPassword(model.Password)
                     };
 
                     // Add the new user to the list
                     users?.Add(newUser);
+                    _appDbContext.Users.Add(newUser);
+                    _appDbContext.SaveChanges();
 
                     // Save updated users list back to JSON file
                     SaveUsersToJsonFile(users);

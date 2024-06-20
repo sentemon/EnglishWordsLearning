@@ -3,8 +3,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using EnglishWordsLearning.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var conncectionString = builder.Configuration.GetConnectionString("Default");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+     options.UseNpgsql(conncectionString,
+             builder => builder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
