@@ -1,0 +1,47 @@
+@model EnglishWordsLearning.Models.SignUpViewModel;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="form-container col-md-6 offset-md-3">
+            <form asp-controller="Access" asp-action="SignUp" method="post">
+                <h1 class="text-center">Sign Up</h1>
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input type="text" class="form-control" placeholder="Username" asp-for="Username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input type="password" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" asp-for="AcceptTerms" />
+                    <label class="form-check-label" asp-for="AcceptTerms">I accept the terms and conditions</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+
+                @if (ViewData["ValidateMessage"] != null)
+                {
+                    <div class="alert alert-danger mt-3">@ViewData["ValidateMessage"]</div>
+                }
+            </form>
+            <div class="text-center mt-3">
+                <p>Already have an account? <a asp-controller="Access" asp-action="SignIn">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
