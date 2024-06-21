@@ -11,11 +11,11 @@
         <div class="col-md-6">
             <h2 class="text-center mb-4">Select Level and Translate the Word</h2>
             
-            <form asp-controller="Test" asp-action="Test" method="get" id="levelForm">
+            <form asp-controller="Test" asp-action="CheckTranslation" method="get" id="levelForm">
                 <div class="form-group">
                     <label for="level">Select Level</label>
                     <select class="form-control" id="level" name="level">
-                        <option value="">All Levels</option>
+                        <option value="AllLevels">All Levels</option>
                         <option value="a1;a2">Beginner</option>
                         <option value="b1;b2">Intermediate</option>
                         <option value="c1">Advanced</option>
@@ -28,7 +28,7 @@
             
             <h3 class="text-center mb-3">Level: @ViewBag.SelectedLevel</h3>
 
-            <form asp-controller="Test" asp-action="Test" method="post" id="translationForm">
+            <form asp-controller="Test" asp-action="CheckTranslation" method="post" id="translationForm">
                 <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />
                 <div class="form-group">
                     <label for="russian">Russian Word</label>
