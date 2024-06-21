@@ -1,7 +1,7 @@
 @model EnglishWordsLearning.Models.WordViewModel
 
 @{
-    ViewData["Title"] = "Test";
+    ViewData["Title"] = "Check Translation";
 }
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -15,10 +15,10 @@
                 <div class="form-group">
                     <label for="level">Select Level</label>
                     <select class="form-control" id="level" name="level">
-                        <option value="All Levels">All Levels</option>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
+                        <option value="">All Levels</option>
+                        <option value="a1;a2">Beginner</option>
+                        <option value="b1;b2">Intermediate</option>
+                        <option value="c1">Advanced</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Start Test</button>
