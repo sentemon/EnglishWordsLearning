@@ -26,7 +26,7 @@
             
             <hr />
             
-            <h3 class="text-center mb-3">Level: @ViewBag.SelectedLevel</h3>
+            <h3 class="text-center mb-3">Level: @ViewBag.DisplayedLevel</h3>
 
             <form asp-controller="Test" asp-action="CheckTranslation" method="post" id="translationForm">
                 <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />

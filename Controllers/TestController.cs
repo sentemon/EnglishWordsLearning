@@ -61,8 +61,9 @@ public class TestController : Controller
     
     public async Task<IActionResult> CheckTranslation(string level = "AllLevels")
     {
+        ViewBag.DisplayedLevel = _levels[level];
         ViewBag.SelectedLevel = level;
-    
+        
         return View();
     }
 
@@ -84,7 +85,7 @@ public class TestController : Controller
         {
             totalQuestions++;
             
-            if (word.English == userTranslation)
+            if (word.English.Equals(userTranslation, StringComparison.OrdinalIgnoreCase))
             {
                 correctAnswers++;
                 ViewBag.Result = "Correct!";

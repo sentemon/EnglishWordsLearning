@@ -40,7 +40,7 @@ namespace EnglishWordsLearning.Controllers
                 {
                     List<Claim> claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.NameIdentifier, modelLogin.Username),
+                        new (ClaimTypes.NameIdentifier, modelLogin.Username),
                     };
 
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(
