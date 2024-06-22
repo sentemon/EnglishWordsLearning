@@ -25,6 +25,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="8.2.0-rc.5" />
   </ItemGroup>
 
   <ItemGroup>

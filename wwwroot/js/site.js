@@ -16,3 +16,5 @@ window.onload = setFocus;
 document.getElementById("translationForm").onsubmit = function () {
     setTimeout(setFocus);
 };
+
+// switch the theme (light / dark)
