@@ -5,6 +5,7 @@ using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace EnglishWordsLearning.Controllers
 {
@@ -36,7 +37,7 @@ namespace EnglishWordsLearning.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (ValidateUser(modelLogin.Username, modelLogin.Password))
+                if (SignInValidateUser(modelLogin.Username, modelLogin.Password))
                 {
                     List<Claim> claims = new List<Claim>()
                     {
@@ -79,10 +80,9 @@ namespace EnglishWordsLearning.Controllers
                     // Load existing users from JSON file
                     List<User>? users = LoadUsersFromJsonFile();
 
-                    // Check if username already exists
-                    if (users != null && users.Any(u => u.Username == model.Username))
+                    // Check if the user fulfills the requirements
+                    if (!SignUpValidateUser(model.Username, model.Password))
                     {
-                        ViewData["ValidateMessage"] = "Username already exists.";
                         return View(model);
                     }
 
@@ -94,13 +94,15 @@ namespace EnglishWordsLearning.Controllers
                         Password = HashPassword(model.Password)
                     };
 
-                    // Add the new user to the list
+                    // Add the new user to the list to the JSON file
                     users?.Add(newUser);
+                    SaveUsersToJsonFile(users);
+
+                    // Add the new user to the database
                     _appDbContext.Users.Add(newUser);
                     _appDbContext.SaveChanges();
 
-                    // Save updated users list back to JSON file
-                    SaveUsersToJsonFile(users);
+                    
 
                     return RedirectToAction("SignIn");
                 }
@@ -117,7 +119,7 @@ namespace EnglishWordsLearning.Controllers
             return View(model);
         }
 
-        private bool ValidateUser(string username, string password)
+        private bool SignInValidateUser(string username, string password)
         {
             List<User>? users = LoadUsersFromJsonFile();
             var user = users?.FirstOrDefault(u => u.Username == username);
@@ -128,6 +130,37 @@ namespace EnglishWordsLearning.Controllers
             }
 
             return false;
+        }
+
+        private bool SignUpValidateUser(string username, string password)
+        {
+            List<User>? users = LoadUsersFromJsonFile();
+            var user = users?.FirstOrDefault(u => u.Username == username);
+
+            Regex regexUsername = new Regex(@"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+            Regex regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+            if (!regexUsername.IsMatch(username) || !regexPassword.IsMatch(password))
+            {
+                if (!regexUsername.IsMatch(username))
+                {
+                    ViewData["ValidateMessage"] = "Username must contain only letters and numbers.";
+                }
+                else if (!regexPassword.IsMatch(password))
+                {
+                    ViewData["ValidateMessage"] = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character.";
+                }
+
+                return false;
+            }
+
+            if (user != null)
+            {
+                ViewData["ValidateMessage"] = "Username already exists.";
+                return false;
+            }
+
+            return true;
         }
 
         private string HashPassword(string password)
