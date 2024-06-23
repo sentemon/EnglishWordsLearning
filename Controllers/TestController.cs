@@ -1,3 +1,4 @@
+using EnglishWordsLearning.Helper;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,8 +8,7 @@ namespace EnglishWordsLearning.Controllers;
 public class TestController : Controller
 {
     // private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
-    private readonly string _csvFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words", "words.csv");
-
+    
     private readonly Dictionary<string, string> _levels = new()
     {
         { "AllLevels", "All Levels" },
@@ -17,64 +17,22 @@ public class TestController : Controller
         { "c1", "Advanced" }
     };
     
-    private async Task<List<WordViewModel>> LoadWordsAsync(string level = "AllLevels")
-    {
-        var words = new List<WordViewModel>();
-
-        try
-        {
-            using (var reader = new StreamReader(_csvFilePath))
-            {
-                var csv = await reader.ReadToEndAsync();
-                var lines = csv.Split("\n").Skip(1);
-
-                foreach (var line in lines)
-                {
-                    if (string.IsNullOrWhiteSpace(line))
-                        continue;
-
-                    var parts = line.Split(";");
-
-                    var word = new WordViewModel
-                    {
-                        English = parts[0],
-                        Level = parts[1],
-                        Transcription = parts[2],
-                        Russian = parts[3],
-                        Class = parts[4]
-                    };
-
-                    if (word.Level[0] == level[0] || level == "AllLevels")
-                    {
-                        words.Add(word);
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            ViewData["ValidateMessage"] = ex.ToString();
-        }
-
-        return words;
-    }
     
     public async Task<IActionResult> CheckTranslation(string level = "AllLevels")
     {
         ViewBag.DisplayedLevel = _levels[level];
         ViewBag.SelectedLevel = level;
         
-        var words = await LoadWordsAsync(level);
+        var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData, level);
         var randomWord = GetRandomWord(words);
         
         return View(randomWord);
     }
-
-
+    
     [HttpPost]
     public async Task<IActionResult> CheckTranslation(string russian, string userTranslation, string level)
     {
-        var words = await LoadWordsAsync(level);
+        var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData, level);
         var word = words.FirstOrDefault(w => w.Russian == russian);
             
         int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
@@ -97,8 +55,8 @@ public class TestController : Controller
                 ViewBag.Result = "Incorrect. The correct translation is: " + word.English;
             }
         }
-
-
+        
+        
         // Save correct answers and total questions back to session
         HttpContext.Session.SetInt32("correctAnswers", correctAnswers);
         HttpContext.Session.SetInt32("totalQuestions", totalQuestions);
@@ -118,6 +76,14 @@ public class TestController : Controller
     {
         var random = new Random();
         return word.MinBy(w => random.Next());
+    }
+
+    public IActionResult RestartTranslation()
+    {
+        HttpContext.Session.Remove("correctAnswers");
+        HttpContext.Session.Remove("totalQuestions");
+        
+        return RedirectToAction("CheckTranslation");
     }
         
 }

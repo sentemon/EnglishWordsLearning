@@ -165,7 +165,7 @@ namespace EnglishWordsLearning.Controllers
 
         private string HashPassword(string password)
         {
-            // return BCrypt.Net.BCrypt.HashPassword(password);
+            // return BCrypt.Net.BCrypt.HashPassword(password); // (change it)
             return password;
         }
 

@@ -2,27 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authorization;
+using EnglishWordsLearning.Helper;
 
 namespace EnglishWordsLearning.Controllers
 {
     [Authorize]
     public class WordsController : Controller
     {
-        private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
-
-        private async Task<List<WordViewModel>> LoadWordsAsync()
-        {
-            using (var reader = new StreamReader(_jsonFilePath))
-            {
-                var json = await reader.ReadToEndAsync();
-                
-                return JsonConvert.DeserializeObject<List<WordViewModel>>(json) ?? throw new InvalidOperationException();
-            }
-        }
-
+        // ToDo: add all words so you can just watch them
         public async Task<IActionResult> Index(string level)
         {
-            var words = await LoadWordsAsync();
+            var words = await LoadWordsHelper.LoadJsonWordsAsync() ;
             if (!string.IsNullOrEmpty(level))
             {
                 words = words.Where(w => w.Level == level).ToList();
@@ -41,12 +31,12 @@ namespace EnglishWordsLearning.Controllers
             if (ModelState.IsValid)
             {
                 wordViewModel.Id = Guid.NewGuid();
-                var words = await LoadWordsAsync();
+                var words = await LoadWordsHelper.LoadJsonWordsAsync();
                 words.Add(wordViewModel);
 
                 // Save updated words back to the file
                 var json = JsonConvert.SerializeObject(words, Formatting.Indented);
-                await System.IO.File.WriteAllTextAsync(_jsonFilePath, json);
+                await System.IO.File.WriteAllTextAsync(LoadWordsHelper.JsonWordsFilePath, json);
 
                 return RedirectToAction("Index");
             }
@@ -57,7 +47,7 @@ namespace EnglishWordsLearning.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveWord(Guid id)
         {
-            var words = await LoadWordsAsync();
+            var words = await LoadWordsHelper.LoadJsonWordsAsync();
             var wordToRemove = words.FirstOrDefault(w => w.Id == id);
             if (wordToRemove != null)
             {
@@ -65,7 +55,7 @@ namespace EnglishWordsLearning.Controllers
 
                 // Save updated words back to the file
                 var json = JsonConvert.SerializeObject(words, Formatting.Indented);
-                await System.IO.File.WriteAllTextAsync(_jsonFilePath, json);
+                await System.IO.File.WriteAllTextAsync(LoadWordsHelper.JsonWordsFilePath, json);
 
                 return RedirectToAction("Index");
             }
