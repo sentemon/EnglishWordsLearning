@@ -20,8 +20,8 @@ document.getElementById("translationForm").onsubmit = function () {
 // switch the theme (light / dark)
 
 // 
-function showPassword() {
-    var x = document.getElementById("inputPassword");
+function showPassword(inputId) {
+    var x = document.getElementById(inputId);
     if (x.type === "password") {
         x.type = "text";
     } else {
