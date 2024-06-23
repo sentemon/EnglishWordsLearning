@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using EnglishWordsLearning.Controllers;
 using EnglishWordsLearning.Data;
+using EnglishWordsLearning.Interfaces;
+using EnglishWordsLearning.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +37,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddScoped<IHistoryLogs, HistoryLogsController>();
 
 var app = builder.Build();
 

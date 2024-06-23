@@ -2,7 +2,7 @@ namespace EnglishWordsLearning.Interfaces
 {
     public interface IHistoryLogs
     {
-        Task AddHistoryLogAsync(int totalQuestions, int correctAnswers, double resultInPercentage);
+        Task HistoryLogsOfTestsAdd(int totalQuestions, int correctAnswers, double resultInPercentage, string level = "AllLevels");
     }
 }
 

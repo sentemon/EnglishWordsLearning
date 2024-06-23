@@ -1,3 +1,4 @@
+using EnglishWordsLearning.Controllers;
 using EnglishWordsLearning.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,5 +12,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<User> Users { get; set; }
+    
+    public DbSet<HistoryLogs> HistoryLogs { get; set; }
     
 }

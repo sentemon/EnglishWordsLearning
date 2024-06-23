@@ -1,15 +1,22 @@
 using EnglishWordsLearning.Helper;
+using EnglishWordsLearning.Interfaces;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace EnglishWordsLearning.Controllers;
 
 public class TestController : Controller
 {
+    private readonly IHistoryLogs _historyLogs;
+    
+    public TestController(IHistoryLogs historyLogs)
+    {
+        _historyLogs = historyLogs;
+    }
+    
     // private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
     
-    private readonly Dictionary<string, string> _levels = new()
+    public static readonly Dictionary<string, string> Levels = new()
     {
         { "AllLevels", "All Levels" },
         { "a1;a2", "Beginner" },
@@ -17,10 +24,9 @@ public class TestController : Controller
         { "c1", "Advanced" }
     };
     
-    
     public async Task<IActionResult> CheckTranslation(string level = "AllLevels")
     {
-        ViewBag.DisplayedLevel = _levels[level];
+        ViewBag.DisplayedLevel = Levels[level];
         ViewBag.SelectedLevel = level;
         
         var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData, level);
@@ -66,9 +72,9 @@ public class TestController : Controller
         ViewBag.CorrectAnswers = correctAnswers;
         ViewBag.TotalQuestions = totalQuestions;
         
-        ViewBag.DisplayedLevel = _levels[level];
+        ViewBag.DisplayedLevel = Levels[level];
         ViewBag.SelectedLevel = level;
-
+        
         return View(randomWord);
     }
 
@@ -78,8 +84,18 @@ public class TestController : Controller
         return word.MinBy(w => random.Next());
     }
 
-    public IActionResult RestartTranslation()
+    public IActionResult FinishTranslation()
     {
+        if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            int totalQuestions = Convert.ToInt32(HttpContext.Session.GetInt32("totalQuestions"));
+            int correctAnswers = Convert.ToInt32(HttpContext.Session.GetInt32("correctAnswers"));
+            double resultInPercentage = totalQuestions > 0 ? (double)correctAnswers / totalQuestions * 100 : 0.0;
+            string? level = HttpContext.Session.GetString("SelectedLevel");
+            
+            _historyLogs.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, level);
+        }
+        
         HttpContext.Session.Remove("correctAnswers");
         HttpContext.Session.Remove("totalQuestions");
         
