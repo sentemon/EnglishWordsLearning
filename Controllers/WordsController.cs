@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authorization;
-using EnglishWordsLearning.Helper;
+using EnglishWordsLearning.Services;
 
 namespace EnglishWordsLearning.Controllers
 {
@@ -10,16 +10,16 @@ namespace EnglishWordsLearning.Controllers
     public class WordsController : Controller
     {
         // ToDo: add all words so you can just watch them
-        public async Task<IActionResult> Index(string level)
+        public async Task<IActionResult> Index(string level = "AllLevels")
         {
-            var words = await LoadWordsHelper.LoadJsonWordsAsync() ;
-            if (!string.IsNullOrEmpty(level))
-            {
-                words = words.Where(w => w.Level == level).ToList();
-            }
+            var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData);
+            
+            words = words.Where(w => w.Level == level || level == "AllLevels").ToList();
+            
             return View(words);
         }
         
+        /*
         public IActionResult AddWord()
         {
             return View();
@@ -62,6 +62,7 @@ namespace EnglishWordsLearning.Controllers
 
             return NotFound();
         }
-
+        
+        */
     }
 }

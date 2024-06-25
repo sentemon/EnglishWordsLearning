@@ -16,13 +16,13 @@ namespace EnglishWordsLearning.Controllers
 
         public AccessController(AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext;
             _usersFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "users.json");
+            _appDbContext = appDbContext;
         }
 
         public IActionResult SignIn()
         {
-            ClaimsPrincipal claimsUser = HttpContext.User;
+            var claimsUser = HttpContext.User;
 
             if (claimsUser.Identity != null && claimsUser.Identity.IsAuthenticated)
             {
@@ -35,13 +35,16 @@ namespace EnglishWordsLearning.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInViewModel modelLogin)
         {
+            // ProfileController.Index(modelLogin.Username)
+            
+            
             if (ModelState.IsValid)
             {
                 if (SignInValidateUser(modelLogin.Username, modelLogin.Password))
                 {
                     List<Claim> claims = new List<Claim>()
                     {
-                        new (ClaimTypes.NameIdentifier, modelLogin.Username),
+                        new (ClaimTypes.NameIdentifier, modelLogin.Username)
                     };
 
                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(
@@ -71,13 +74,12 @@ namespace EnglishWordsLearning.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignUp(SignUpViewModel model)
+        public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Load existing users from JSON file
                     List<User>? users = LoadUsersFromJsonFile();
 
                     // Check if the user fulfills the requirements
@@ -85,9 +87,8 @@ namespace EnglishWordsLearning.Controllers
                     {
                         return View(model);
                     }
-
-                    // Create a new user
-                    User newUser = new User
+                    
+                    var newUser = new User
                     {
                         Id = Guid.NewGuid(),
                         Username = model.Username,
@@ -100,9 +101,7 @@ namespace EnglishWordsLearning.Controllers
 
                     // Add the new user to the database
                     _appDbContext.Users.Add(newUser);
-                    _appDbContext.SaveChanges();
-
-                    
+                    await _appDbContext.SaveChangesAsync();
 
                     return RedirectToAction("SignIn");
                 }
@@ -116,7 +115,7 @@ namespace EnglishWordsLearning.Controllers
                 ViewData["ValidateMessage"] = "Please correct the errors and try again.";
             }
 
-            return View(model);
+            return View();
         }
 
         private bool SignInValidateUser(string username, string password)
@@ -173,7 +172,7 @@ namespace EnglishWordsLearning.Controllers
         {
             if (!System.IO.File.Exists(_usersFilePath))
             {
-                return new List<User>(); // Return an empty list if file doesn't exist
+                return new List<User>();
             }
 
             string json = System.IO.File.ReadAllText(_usersFilePath);
@@ -184,6 +183,17 @@ namespace EnglishWordsLearning.Controllers
         {
             string json = JsonConvert.SerializeObject(users, Formatting.Indented);
             System.IO.File.WriteAllText(_usersFilePath, json);
+        }
+        
+        public string GetCurrentUsername()
+        {
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                Claim? usernameClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+                return usernameClaim?.Value ?? string.Empty;
+            }
+            
+            return string.Empty;
         }
     }
 }

@@ -2,7 +2,7 @@ using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
 
-namespace EnglishWordsLearning.Helper
+namespace EnglishWordsLearning.Services
 {
     public static class LoadWordsHelper
     {

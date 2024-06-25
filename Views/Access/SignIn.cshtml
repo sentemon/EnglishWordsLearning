@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label asp-for="Password"></label>
                 <input type="password" class="form-control" placeholder="Password" asp-for="Password" id="inputPassword" />
-                <input type="checkbox" onclick="showPassword()"/> Show
+                <input type="checkbox" onclick="showPassword('inputPassword')"/> Show
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
