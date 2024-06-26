@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
 using EnglishWordsLearning.Controllers;
 using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Interfaces;
-using EnglishWordsLearning.Models;
+using EnglishWordsLearning.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +12,7 @@ var conncectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
      options.UseNpgsql(conncectionString,
-             builder => builder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+             dbContextOptionsBuilder => dbContextOptionsBuilder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -38,6 +34,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHistoryLogs, HistoryLogsController>();
 
 var app = builder.Build();
