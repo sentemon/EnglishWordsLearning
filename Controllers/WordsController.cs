@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authorization;
 using EnglishWordsLearning.Services;
 
@@ -9,15 +7,16 @@ namespace EnglishWordsLearning.Controllers
     [Authorize]
     public class WordsController : Controller
     {
-        // ToDo: add all words so you can just watch them
-        public async Task<IActionResult> Index(string level = "AllLevels")
+        public async Task<IActionResult> Index(string? searchTerm = null, string level = "AllLevels")
         {
             var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData);
             
-            words = words.Where(w => w.Level == level || level == "AllLevels").ToList();
+            words = words.Where(w => w.Level == level || level == "AllLevels" && w.English == searchTerm || searchTerm == null).ToList();
             
             return View(words);
         }
+
+        
         
         /*
         public IActionResult AddWord()

@@ -4,7 +4,14 @@
     ViewData["Title"] = "Words";
 }
 
-<h2>Word List</h2>
+<div class="d-flex">
+    <h2>Word List</h2>
+    <form asp-action="Index" asp-controller="Words" method="get" class="d-flex">
+        <input placeholder="Search..." type="text" name="SearchTerm" class="form-control">
+        <button type="submit" class="btn btn-link"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+
 <table>
     <thead>
     <tr>
@@ -36,3 +43,5 @@
     }
     </tbody>
 </table>
+<br/>
+<br/>

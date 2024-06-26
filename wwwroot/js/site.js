@@ -13,7 +13,7 @@ function setFocus() {
 window.onload = setFocus;
 
 // Set focus after the form is submitted
-document.getElementById("translationForm").onsubmit = function () {
+document.getElementById("translationForm").onsubmit = function() {
     setTimeout(setFocus);
 };
 
