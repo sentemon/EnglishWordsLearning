@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -9,11 +10,11 @@ using EnglishWordsLearning.Interfaces;
 
 namespace EnglishWordsLearning.Controllers
 {
-    public class AccessController : Controller
+    public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
 
-        public AccessController(IAccountService accountService)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
@@ -26,16 +27,13 @@ namespace EnglishWordsLearning.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInViewModel modelLogin)
         {
-            // ProfileController.Index(modelLogin.Username)
-            
-            
             if (ModelState.IsValid)
             {
                 if (_accountService.SignInValidateUser(modelLogin.Username, modelLogin.Password))
@@ -57,12 +55,17 @@ namespace EnglishWordsLearning.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity), properties);
-
+                    
+                    
+                    
+                    Console.WriteLine("gen " + GC.GetGeneration(TempData));
+                    
                     return RedirectToAction("Index", "Home");
                 }
 
                 ViewData["ValidateMessage"] = "User not found";
             }
+            
             return View(modelLogin);
         }
 
@@ -79,7 +82,7 @@ namespace EnglishWordsLearning.Controllers
                 try
                 {
                     // Check if the user fulfills the requirements
-                    if (!_accountService.SignUpValidateUser(model.Username, model.Password))
+                    if (SignUpValidateUser(model.Username, model.Password))
                     {
                         return View(model);
                     }
@@ -105,8 +108,39 @@ namespace EnglishWordsLearning.Controllers
             {
                 ViewData["ValidateMessage"] = "Please correct the errors and try again.";
             }
-
+            
             return View();
+        }
+        
+        public bool SignUpValidateUser(string username, string password)
+        {
+            List<User> users = _accountService.LoadUsersFromDb();
+            var user = users.FirstOrDefault(u => u.Username == username);
+            
+            if (user != null)
+            {
+                ViewData["ValidateMessage"] = "Username already exists.";
+                return false;
+            }
+
+            Regex regexUsername = new Regex(@"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
+            Regex regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+            if (!(regexUsername.IsMatch(username) && regexPassword.IsMatch(password)))
+            {
+                if (!regexUsername.IsMatch(username))
+                {
+                    ViewData["ValidateMessage"] = "Username must contain only letters and numbers.";
+                }
+                else if (!regexPassword.IsMatch(password))
+                {
+                    ViewData["ValidateMessage"] = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character.";
+                }
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

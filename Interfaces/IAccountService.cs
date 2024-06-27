@@ -1,12 +1,11 @@
 using EnglishWordsLearning.Models;
+using JetBrains.Annotations;
 
 namespace EnglishWordsLearning.Interfaces;
 
 public interface IAccountService
 {
     public bool SignInValidateUser(string username, string password);
-
-    public bool SignUpValidateUser(string username, string password);
 
     public string HashPassword(string password);
 

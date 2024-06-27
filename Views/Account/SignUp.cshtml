@@ -6,7 +6,7 @@
 
 <div class="container mt-5">
     <div class="form-container col-md-6 offset-md-3">
-        <form asp-controller="Access" asp-action="SignUp" method="post">
+        <form asp-controller="Account" asp-action="SignUp" method="post">
             <h1 class="text-center">Sign Up</h1>
             <div class="form-group">
                 <label asp-for="Username"></label>
@@ -37,7 +37,7 @@
             }
         </form>
         <div class="text-center mt-3">
-            <p>Already have an account? <a asp-controller="Access" asp-action="SignIn">Sign In</a></p>
+            <p>Already have an account? <a asp-controller="Account" asp-action="SignIn">Sign In</a></p>
         </div>
     </div>
 </div>

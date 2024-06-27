@@ -24,7 +24,7 @@ public class HomeController : Controller
     public new async Task<IActionResult> SignOut()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("SignIn", "Access");
+        return RedirectToAction("SignIn", "Account");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 
 namespace EnglishWordsLearning.Services
@@ -34,37 +35,6 @@ namespace EnglishWordsLearning.Services
             return false;
         }
         
-        public bool SignUpValidateUser(string username, string password)
-        {
-            List<User> users = LoadUsersFromDb();
-            var user = users.FirstOrDefault(u => u.Username == username);
-            
-            if (user != null)
-            {
-                _viewComponent.ViewData["ValidateMessage"] = "Username already exists.";
-                return false;
-            }
-
-            Regex regexUsername = new Regex(@"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
-            Regex regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
-
-            if (!regexUsername.IsMatch(username) || !regexPassword.IsMatch(password))
-            {
-                if (!regexUsername.IsMatch(username))
-                {
-                    _viewComponent.ViewData["ValidateMessage"] = "Username must contain only letters and numbers.";
-                }
-                else if (!regexPassword.IsMatch(password))
-                {
-                    _viewComponent.ViewData["ValidateMessage"] = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character.";
-                }
-
-                return false;
-            }
-
-            return true;
-        }
-        
         public string HashPassword(string password)
         {
             // return BCrypt.Net.BCrypt.HashPassword(password); // (change it)
@@ -82,7 +52,8 @@ namespace EnglishWordsLearning.Services
         {
             if (_viewComponent.HttpContext.User.Identity is ClaimsIdentity identity)
             {
-                Claim? usernameClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+                var usernameClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+                
                 return usernameClaim?.Value ?? string.Empty;
             }
             
