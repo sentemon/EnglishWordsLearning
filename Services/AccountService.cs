@@ -50,14 +50,9 @@ namespace EnglishWordsLearning.Services
         
         public string GetCurrentUsername()
         {
-            if (_viewComponent.HttpContext.User.Identity is ClaimsIdentity identity)
-            {
-                var usernameClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
-                
-                return usernameClaim?.Value ?? string.Empty;
-            }
-            
-            return string.Empty;
+            string? username = _viewComponent.TempData["username"]?.ToString();
+
+            return username ?? string.Empty;
         }
 
         public void SaveUserToDb(User user)

@@ -56,10 +56,6 @@ namespace EnglishWordsLearning.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity), properties);
                     
-                    
-                    
-                    Console.WriteLine("gen " + GC.GetGeneration(TempData));
-                    
                     return RedirectToAction("Index", "Home");
                 }
 
