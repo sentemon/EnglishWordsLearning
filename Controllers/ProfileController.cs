@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Models;
+using EnglishWordsLearning.Interfaces;
 
 namespace EnglishWordsLearning.Controllers
 {
@@ -14,18 +15,12 @@ namespace EnglishWordsLearning.Controllers
         }
 
         
-        [Route("Profile/{username?}")]
-        public IActionResult Index(string? username)
+        [Route("Profile/{username}")]
+        public IActionResult Index(string username)
         {
-            // If no username is provided, use the current logged-in user's username
             if (string.IsNullOrEmpty(username))
             {
-                username = User.Identity?.Name;
-
-                if (string.IsNullOrEmpty(username))
-                {
-                    RedirectToAction("SignIn", "Access");
-                }
+                RedirectToAction("SignIn", "Account");
             }
 
             var userProfile = _appDbContext.Users
@@ -41,8 +36,6 @@ namespace EnglishWordsLearning.Controllers
             {
                 return NotFound();
             }
-
-            ViewData["username"] = userProfile.Username;
             
             return View(userProfile);
         }
