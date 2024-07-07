@@ -11,6 +11,14 @@ namespace EnglishWordsLearning.Services
 
         private static readonly string CsvWordsFilePath =
             Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words", "words.csv");
+        
+        public static readonly Dictionary<string, string> Levels = new()
+        {
+            { "AllLevels", "All Levels" },
+            { "a1;a2", "Beginner" },
+            { "b1;b2", "Intermediate" },
+            { "c1", "Advanced" }
+        };
 
         public static async Task<List<WordViewModel>> LoadJsonWordsAsync()
         {

@@ -1,6 +1,7 @@
 using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Interfaces;
 using EnglishWordsLearning.Models;
+using EnglishWordsLearning.Services;
 using static EnglishWordsLearning.Controllers.TestController;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,7 @@ namespace EnglishWordsLearning.Controllers
             {
                 Id = Guid.NewGuid(),
                 Date = DateTime.UtcNow,
-                Level = Levels[level],
+                Level = LoadWordsHelper.Levels[level],
                 TotalQuestions = totalQuestions,
                 CorrectAnswers = correctAnswers,
                 ResultInPercentage = resultInPercentage

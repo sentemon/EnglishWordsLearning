@@ -16,17 +16,9 @@ public class TestController : Controller
     
     // private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
     
-    public static readonly Dictionary<string, string> Levels = new()
-    {
-        { "AllLevels", "All Levels" },
-        { "a1;a2", "Beginner" },
-        { "b1;b2", "Intermediate" },
-        { "c1", "Advanced" }
-    };
-    
     public async Task<IActionResult> CheckTranslation(string level = "AllLevels")
     {
-        ViewBag.DisplayedLevel = Levels[level];
+        ViewBag.DisplayedLevel = LoadWordsHelper.Levels[level];
         ViewBag.SelectedLevel = level;
         
         var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData, level);
@@ -72,7 +64,7 @@ public class TestController : Controller
         ViewBag.CorrectAnswers = correctAnswers;
         ViewBag.TotalQuestions = totalQuestions;
         
-        ViewBag.DisplayedLevel = Levels[level];
+        ViewBag.DisplayedLevel = LoadWordsHelper.Levels[level];
         ViewBag.SelectedLevel = level;
         
         return View(randomWord);
