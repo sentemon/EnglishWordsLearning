@@ -30,7 +30,7 @@ public class TestController : Controller
         ViewBag.SelectedLevel = level;
         
         var words = await LoadWordsHelper.LoadCsvWordsAsync(ViewData, level);
-        var randomWord = GetRandomWord(words);
+        var randomWord = LoadWordsHelper.GetRandomWord(words);
         
         return View(randomWord);
     }
@@ -43,12 +43,12 @@ public class TestController : Controller
             
         int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
         int totalQuestions = HttpContext.Session.GetInt32("totalQuestions") ?? 0;
-
-        var randomWord = GetRandomWord(words);
+    
+        var randomWord = LoadWordsHelper.GetRandomWord(words);
         
         if (word != null)
         {
-            randomWord = GetRandomWord(words);
+            randomWord = LoadWordsHelper.GetRandomWord(words);
             totalQuestions++;
             
             if (word.English.Equals(userTranslation, StringComparison.OrdinalIgnoreCase))
@@ -67,7 +67,7 @@ public class TestController : Controller
         HttpContext.Session.SetInt32("correctAnswers", correctAnswers);
         HttpContext.Session.SetInt32("totalQuestions", totalQuestions);
         
-
+    
         // Pass the result and count to the view
         ViewBag.CorrectAnswers = correctAnswers;
         ViewBag.TotalQuestions = totalQuestions;
@@ -78,11 +78,7 @@ public class TestController : Controller
         return View(randomWord);
     }
 
-    private WordViewModel? GetRandomWord(List<WordViewModel> word)
-    {
-        var random = new Random();
-        return word.MinBy(w => random.Next());
-    }
+    
 
     public IActionResult FinishTranslation()
     {
