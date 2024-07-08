@@ -4,37 +4,51 @@
     ViewData["Title"] = "Flash Cards";
 }
 
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Select Level and Learn the Word</h2>
+        <div class="col-md-8 col-lg-6">
+            <h2 class="text-center mb-3">Select Level and Learn the Word</h2>
             
-            <form asp-controller="FlashCards" asp-action="Index" method="get" id="levelForm">
-                <div class="form-group">
-                    <label for="level">Select Level</label>
-                    <select class="form-control" id="level" name="level">
-                        <option value="AllLevels">All Levels</option>
-                        <option value="a1;a2">Beginner</option>
-                        <option value="b1;b2">Intermediate</option>
-                        <option value="c1">Advanced</option>
-                    </select>
+            <form asp-controller="FlashCards" asp-action="Index" method="get" id="levelForm" class="mb-3">
+                <div class="form-row align-items-center">
+                    <div class="col-8">
+                        <label class="sr-only" for="level">Select Level</label>
+                        <select class="form-control" id="level" name="level">
+                            <option value="AllLevels">All Levels</option>
+                            <option value="a1;a2">Beginner</option>
+                            <option value="b1;b2">Intermediate</option>
+                            <option value="c1">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Show Words</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Show Words</button>
             </form>
-            
-            <hr />
             
             <h3 class="text-center mb-3">Level: @ViewBag.DisplayedLevel</h3>
 
             <form asp-controller="FlashCards" asp-action="Index" method="post" id="translationForm">
                 <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />
                 <div class="form-group">
+                    <label for="english">English Word</label>
+                    <input type="text" class="form-control" id="english" name="english" value="@Model?.English" readonly />
+                </div>
+                <div class="form-group">
                     <label for="russian">Russian Word</label>
                     <input type="text" class="form-control" id="russian" name="russian" value="@Model?.Russian" readonly />
                 </div>
                 <div class="form-group">
-                    <label for="english">Your Translation</label>
-                    <input type="text" class="form-control" id="english" name="english" value="@Model?.English" readonly />
+                    <label for="level">Level</label>
+                    <input type="text" class="form-control" id="level" name="level" value="@Model?.Level" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="transcription">Transcription</label>
+                    <input type="text" class="form-control" id="transcription" name="transcription" value="@Model?.Transcription" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="class">Class</label>
+                    <input type="text" class="form-control" id="class" name="class" value="@Model?.Class" readonly />
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Next</button>
             </form>
@@ -42,8 +56,7 @@
             @if (ViewBag.TotalQuestions > 0)
             {
                 <p class="text-center mt-3">
-                    You learnt @ViewBag.TotalQuestions words
-                    | This is x% of X level
+                    You learnt @ViewBag.TotalQuestions words | This is x% of X level
                 </p>
             }
         </div>
