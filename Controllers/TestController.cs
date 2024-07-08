@@ -79,7 +79,7 @@ public class TestController : Controller
             int totalQuestions = Convert.ToInt32(HttpContext.Session.GetInt32("totalQuestions"));
             int correctAnswers = Convert.ToInt32(HttpContext.Session.GetInt32("correctAnswers"));
             double resultInPercentage = totalQuestions > 0 ? (double)correctAnswers / totalQuestions * 100 : 0.0;
-            string? level = HttpContext.Session.GetString("SelectedLevel");
+            string level = HttpContext.Session.GetString("SelectedLevel") ?? "AllLevels";
             
             _historyLogs.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, level);
         }

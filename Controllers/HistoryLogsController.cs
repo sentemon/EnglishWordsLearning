@@ -18,7 +18,7 @@ namespace EnglishWordsLearning.Controllers
 
         public IActionResult HistoryLogsOfTests()
         {
-            var historyLogs = _appDbContext.HistoryLogs.ToList() ?? null;
+            var historyLogs = _appDbContext.HistoryLogs ?? null;
             
             if (historyLogs != null)
             {
