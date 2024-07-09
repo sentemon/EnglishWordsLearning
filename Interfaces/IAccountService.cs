@@ -14,4 +14,7 @@ public interface IAccountService
     public string GetCurrentUsername();
 
     public void SaveUserToDb(User user);
+
+    public bool SignUpValidateUserName(string username);
+    public bool SignUpValidateUserPassword(string password);
 }

@@ -34,6 +34,30 @@ namespace EnglishWordsLearning.Services
 
             return false;
         }
+
+        public bool SignUpValidateUserName(string username)
+        {
+            Regex regexUsername = new Regex(@"^[a-z]+([._]?[a-z0-9]+)*$");
+            
+            if (!regexUsername.IsMatch(username))
+            {
+                return false;
+            }
+            
+            return true;
+        }
+
+        public bool SignUpValidateUserPassword(string password)
+        {
+            Regex regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+            if (!regexPassword.IsMatch(password))
+            {
+                return false;
+            }
+
+            return true;
+        }
         
         public string HashPassword(string password)
         {

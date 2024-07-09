@@ -78,7 +78,7 @@ namespace EnglishWordsLearning.Controllers
                 try
                 {
                     // Check if the user fulfills the requirements
-                    if (SignUpValidateUser(model.Username, model.Password))
+                    if (!SignUpValidateUser(model.Username, model.Password))
                     {
                         return View(model);
                     }
@@ -107,7 +107,7 @@ namespace EnglishWordsLearning.Controllers
             
             return View();
         }
-        
+        //ToDo: wyswietlac dokladny blad
         public bool SignUpValidateUser(string username, string password)
         {
             List<User> users = _accountService.LoadUsersFromDb();
@@ -119,16 +119,13 @@ namespace EnglishWordsLearning.Controllers
                 return false;
             }
 
-            Regex regexUsername = new Regex(@"^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$");
-            Regex regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
-
-            if (!(regexUsername.IsMatch(username) && regexPassword.IsMatch(password)))
+            if (!(_accountService.SignUpValidateUserName(username) && _accountService.SignUpValidateUserPassword(password)))
             {
-                if (!regexUsername.IsMatch(username))
+                if (!_accountService.SignUpValidateUserName(username))
                 {
                     ViewData["ValidateMessage"] = "Username must contain only letters and numbers.";
                 }
-                else if (!regexPassword.IsMatch(password))
+                else if (_accountService.SignUpValidateUserPassword(password))
                 {
                     ViewData["ValidateMessage"] = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character.";
                 }
