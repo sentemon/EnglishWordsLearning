@@ -4,6 +4,17 @@ namespace EnglishWordsLearning.Models
 {
     public class SignUpViewModel
     {
+        [Display(Name = "Email")]
+        public required string? Email { get; set; }
+        
+        [Required]
+        [Display(Name = "First Name")]
+        public required string FirstName { get; set; }
+        
+        [Required]
+        [Display(Name = "Last Name")]
+        public required string LastName { get; set; }
+        
         [Required]
         [Display(Name = "Username")]
         public required string Username { get; set; }

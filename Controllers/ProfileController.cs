@@ -8,31 +8,25 @@ namespace EnglishWordsLearning.Controllers
     public class ProfileController : Controller
     {
         private readonly AppDbContext _appDbContext;
-        private readonly IAccountService _accountService;
 
-        public ProfileController(AppDbContext appDbContext, IAccountService accountService)
+        public ProfileController(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-            _accountService = accountService;
         }
 
         
         [Route("Profile/{username}")]
         public IActionResult Index(string username)
         {
-            if (string.IsNullOrEmpty(username))
-            {
-                RedirectToAction("SignIn", "Account");
-            }
-
-            username = _accountService.GetCurrentUsername();
-            
             var userProfile = _appDbContext.Users
                 .Where(u => u.Username == username)
                 .Select(u => new User
                 {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
                     Username = u.Username,
-                    Password = u.Password // Do not expose password in the view
+                    Password = u.Password
                 })
                 .FirstOrDefault();
 

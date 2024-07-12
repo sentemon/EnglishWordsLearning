@@ -8,22 +8,41 @@
     <div class="form-container col-md-6 offset-md-3">
         <form asp-controller="Account" asp-action="SignUp" method="post">
             <h1 class="text-center">Sign Up</h1>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="FirstName"></label>
+                    <input type="text" class="form-control" placeholder="First Name" asp-for="FirstName" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="LastName"></label>
+                    <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
             <div class="form-group">
                 <label asp-for="Username"></label>
                 <input type="text" class="form-control" placeholder="Username" asp-for="Username" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
-                <input type="password" class="form-control" placeholder="Password" asp-for="Password" id="inputPassword"/>
-                <input type="checkbox" onclick="showPassword('inputPassword')"/> Show
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="Email"></label>
+                <input type="text" class="form-control" placeholder="Email" asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input type="password" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword"  id="inputConfirmPassword"/>
-                <input type="checkbox" onclick="showPassword('inputConfirmPassword')"/> Show
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Password"></label>
+                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" id="inputPassword"/>
+                    <input type="checkbox" onclick="showPassword('inputPassword')"/> Show
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input type="password" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword"  id="inputConfirmPassword"/>
+                    <input type="checkbox" onclick="showPassword('inputConfirmPassword')"/> Show
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" asp-for="AcceptTerms" />

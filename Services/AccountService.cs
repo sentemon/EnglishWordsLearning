@@ -1,12 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc.Controllers;
 
 
 namespace EnglishWordsLearning.Services
@@ -14,7 +9,6 @@ namespace EnglishWordsLearning.Services
     public class AccountService : Interfaces.IAccountService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ViewComponent _viewComponent;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AccountService(AppDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
@@ -60,10 +54,39 @@ namespace EnglishWordsLearning.Services
 
             return true;
         }
+
+        public bool SignUpValidateUserEmail(string? email)
+        {
+            if (email == null)
+            {
+                return false;
+            }
+
+            Regex regexEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+
+            if (!regexEmail.IsMatch(email))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool SignUpValidateUserFullName(string firstName, string lastName)
+        {
+            Regex regexFullName = new Regex(@"^[a-zA-Z]+$");
+
+            if (!regexFullName.IsMatch(firstName) || !regexFullName.IsMatch(lastName))
+            {
+                return false;
+            }
+
+            return true;
+        }
         
         public string HashPassword(string password)
         {
-            // return BCrypt.Net.BCrypt.HashPassword(password); // (change it)
+            // return BCrypt.Net.BCrypt.HashPassword(password); //ToDo: change it
             return password;
         }
 

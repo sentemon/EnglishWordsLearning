@@ -74,7 +74,7 @@ namespace EnglishWordsLearning.Controllers
                 try
                 {
                     // Check if the user fulfills the requirements
-                    if (!SignUpValidateUser(model.Username, model.Password))
+                    if (!SignUpValidateUser(model.FirstName, model.LastName, model.Username, model.Password, model.Email))
                     {
                         return View(model);
                     }
@@ -82,6 +82,9 @@ namespace EnglishWordsLearning.Controllers
                     var newUser = new User
                     {
                         Id = Guid.NewGuid(),
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
                         Username = model.Username,
                         Password = _accountService.HashPassword(model.Password)
                     };
@@ -104,7 +107,7 @@ namespace EnglishWordsLearning.Controllers
             return View();
         }
         //ToDo: wyswietlac dokladny blad
-        public bool SignUpValidateUser(string username, string password)
+        public bool SignUpValidateUser(string firstName, string lastName, string username, string password, string? email)
         {
             List<User> users = _accountService.LoadUsersFromDb();
             var user = users.FirstOrDefault(u => u.Username == username);
@@ -125,7 +128,15 @@ namespace EnglishWordsLearning.Controllers
                 {
                     ViewData["ValidateMessage"] = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character.";
                 }
-
+                else if (!_accountService.SignUpValidateUserEmail(email))
+                {
+                    ViewData["ValidateMessage"] = "Invalid email address.";
+                }
+                else if (!_accountService.SignUpValidateUserFullName(firstName, lastName))
+                {
+                    ViewData["ValidateMessage"] = "First name and last name must contain only letters.";
+                }
+                
                 return false;
             }
 
