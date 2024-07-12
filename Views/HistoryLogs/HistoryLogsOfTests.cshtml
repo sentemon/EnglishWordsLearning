@@ -1,7 +1,7 @@
 @model IEnumerable<EnglishWordsLearning.Models.HistoryLogs>
 
 @{
-    ViewData["Title"] = "History Logs of Tests";
+    ViewData["Title"] = "History Logs of Tests of " + ViewBag.Username ?? "User";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -21,13 +21,17 @@
         <tbody>
             @foreach (var log in Model)
             {
-                <tr>
-                    <td>@log.Level</td>
-                    <td>@log.Date</td>
-                    <td>@log.CorrectAnswers</td>
-                    <td>@log.TotalQuestions</td>
-                    <td>@log.ResultInPercentage</td>
-                </tr>
+                if (log.Username == ViewBag.Username)
+                {
+                    <tr>
+                        <td>@log.Level</td>
+                        <td>@log.Date</td>
+                        <td>@log.CorrectAnswers</td>
+                        <td>@log.TotalQuestions</td>
+                        <td>@log.ResultInPercentage</td>
+                    </tr>
+
+                }
             }
         </tbody>
     </table>

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EnglishWordsLearning.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240623180832_CreateHistoryLogsTable")]
+    [Migration("20240712171607_CreateHistoryLogsTable")]
     partial class CreateHistoryLogsTable
     {
         /// <inheritdoc />
@@ -38,7 +38,6 @@ namespace EnglishWordsLearning.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Level")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("ResultInPercentage")
@@ -46,6 +45,10 @@ namespace EnglishWordsLearning.Migrations
 
                     b.Property<int>("TotalQuestions")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

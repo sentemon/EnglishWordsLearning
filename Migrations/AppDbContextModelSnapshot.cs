@@ -35,7 +35,6 @@ namespace EnglishWordsLearning.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Level")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("ResultInPercentage")
@@ -43,6 +42,10 @@ namespace EnglishWordsLearning.Migrations
 
                     b.Property<int>("TotalQuestions")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

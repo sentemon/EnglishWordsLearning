@@ -80,8 +80,9 @@ public class TestController : Controller
             int correctAnswers = Convert.ToInt32(HttpContext.Session.GetInt32("correctAnswers"));
             double resultInPercentage = totalQuestions > 0 ? (double)correctAnswers / totalQuestions * 100 : 0.0;
             string level = HttpContext.Session.GetString("SelectedLevel") ?? "AllLevels";
+            string username = ViewBag.Username;
             
-            _historyLogs.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, level);
+            _historyLogs.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
         }
         
         HttpContext.Session.Remove("correctAnswers");
