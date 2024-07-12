@@ -8,10 +8,12 @@ namespace EnglishWordsLearning.Controllers
     public class ProfileController : Controller
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IAccountService _accountService;
 
-        public ProfileController(AppDbContext appDbContext)
+        public ProfileController(AppDbContext appDbContext, IAccountService accountService)
         {
             _appDbContext = appDbContext;
+            _accountService = accountService;
         }
 
         
@@ -23,6 +25,8 @@ namespace EnglishWordsLearning.Controllers
                 RedirectToAction("SignIn", "Account");
             }
 
+            username = _accountService.GetCurrentUsername();
+            
             var userProfile = _appDbContext.Users
                 .Where(u => u.Username == username)
                 .Select(u => new User

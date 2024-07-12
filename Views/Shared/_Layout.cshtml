@@ -39,7 +39,7 @@
                                 Profile
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Profile"  asp-action="Index" asp-route-username="@TempData["username"]">Profile</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Profile"  asp-action="Index" asp-route-username="@ViewBag.Username">Profile</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="SignUp">Sign Up</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SignOut">Sign Out</a></li>

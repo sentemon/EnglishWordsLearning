@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
-using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Models;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using EnglishWordsLearning.Services;
 using EnglishWordsLearning.Interfaces;
 
 namespace EnglishWordsLearning.Controllers
@@ -27,7 +24,7 @@ namespace EnglishWordsLearning.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
             return View();
         }
 
@@ -38,16 +35,16 @@ namespace EnglishWordsLearning.Controllers
             {
                 if (_accountService.SignInValidateUser(modelLogin.Username, modelLogin.Password))
                 {
-                    List<Claim> claims = new List<Claim>()
+                    var claims = new List<Claim>
                     {
                         new (ClaimTypes.NameIdentifier, modelLogin.Username)
                     };
-
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                    
+                    var claimsIdentity = new ClaimsIdentity(
                         claims, CookieAuthenticationDefaults.AuthenticationScheme
                     );
 
-                    AuthenticationProperties properties = new AuthenticationProperties()
+                    var properties = new AuthenticationProperties()
                     {
                         AllowRefresh = true,
                         IsPersistent = modelLogin.KeepLoggedIn
@@ -61,7 +58,6 @@ namespace EnglishWordsLearning.Controllers
 
                 ViewData["ValidateMessage"] = "User not found";
             }
-            
             return View(modelLogin);
         }
 

@@ -15,10 +15,12 @@ namespace EnglishWordsLearning.Services
     {
         private readonly AppDbContext _appDbContext;
         private readonly ViewComponent _viewComponent;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountService(AppDbContext appDbContext)
+        public AccountService(AppDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
         {
             _appDbContext = appDbContext;
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
 
@@ -74,7 +76,7 @@ namespace EnglishWordsLearning.Services
         
         public string GetCurrentUsername()
         {
-            string? username = _viewComponent.TempData["username"]?.ToString();
+            var username = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return username ?? string.Empty;
         }
