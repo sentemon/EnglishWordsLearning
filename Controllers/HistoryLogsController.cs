@@ -1,22 +1,21 @@
 using EnglishWordsLearning.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EnglishWordsLearning.Controllers
+namespace EnglishWordsLearning.Controllers;
+
+public class HistoryLogsController : Controller
 {
-    public class HistoryLogsController : Controller
+    private readonly AppDbContext _appDbContext;
+
+    public HistoryLogsController(AppDbContext appDbContext)
     {
-        private readonly AppDbContext _appDbContext;
+        _appDbContext = appDbContext;
+    }
 
-        public HistoryLogsController(AppDbContext appDbContext)
-        {
-            _appDbContext = appDbContext;
-        }
+    public IActionResult HistoryLogsOfTests()
+    {
+        var historyLogs = _appDbContext.HistoryLogs;
 
-        public IActionResult HistoryLogsOfTests()
-        {
-            var historyLogs = _appDbContext.HistoryLogs;
-
-            return View(historyLogs);
-        }
+        return View(historyLogs);
     }
 }

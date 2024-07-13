@@ -20,7 +20,7 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+
     public new async Task<IActionResult> SignOut()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

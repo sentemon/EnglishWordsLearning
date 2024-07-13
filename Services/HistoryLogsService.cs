@@ -2,32 +2,31 @@ using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Interfaces;
 using EnglishWordsLearning.Models;
 
-namespace EnglishWordsLearning.Services
+namespace EnglishWordsLearning.Services;
+
+public class HistoryLogsService : IHistoryLogs
 {
-    public class HistoryLogsService : IHistoryLogs
+    private readonly AppDbContext _appDbContext;
+
+    public HistoryLogsService(AppDbContext appDbContext)
     {
-        private readonly AppDbContext _appDbContext;
+        _appDbContext = appDbContext;
+    }
 
-        public HistoryLogsService(AppDbContext appDbContext)
+    public async Task HistoryLogsOfTestsAdd(int totalQuestions, int correctAnswers, double resultInPercentage, string username, string level = "AllLevels")
+    {
+        HistoryLogs newHistoryLogs = new HistoryLogs
         {
-            _appDbContext = appDbContext;
-        }
+            Id = Guid.NewGuid(),
+            Date = DateTime.UtcNow,
+            Level = LoadWordsHelper.Levels[level],
+            TotalQuestions = totalQuestions,
+            CorrectAnswers = correctAnswers,
+            ResultInPercentage = resultInPercentage,
+            Username = username
+        };
 
-        public async Task HistoryLogsOfTestsAdd(int totalQuestions, int correctAnswers, double resultInPercentage, string username, string level = "AllLevels")
-        {
-            HistoryLogs newHistoryLogs = new HistoryLogs
-            {
-                Id = Guid.NewGuid(),
-                Date = DateTime.UtcNow,
-                Level = LoadWordsHelper.Levels[level],
-                TotalQuestions = totalQuestions,
-                CorrectAnswers = correctAnswers,
-                ResultInPercentage = resultInPercentage,
-                Username = username
-            };
-
-            _appDbContext.HistoryLogs.Add(newHistoryLogs);
-            await _appDbContext.SaveChangesAsync();
-        }
+        _appDbContext.HistoryLogs.Add(newHistoryLogs);
+        await _appDbContext.SaveChangesAsync();
     }
 }
