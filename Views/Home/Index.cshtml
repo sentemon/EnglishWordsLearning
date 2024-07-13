@@ -4,7 +4,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome <b>@ViewBag.Username</b></h1>
-    <p>Learn English words with us</p>
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome <b>@ViewBag.Username</b></h1>
+        <p class="lead">Learn English words with us</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">About EnglishWordsLearning</h2>
+            <p class="card-text">Welcome to EnglishWordsLearning, an interactive platform designed to help you expand your English vocabulary and improve your language skills through a variety of tools and activities.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Features</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Words:</strong> Browse and learn new words from our extensive database.</li>
+                <li class="list-group-item"><strong>FlashCards:</strong> Use flashcards to test your knowledge and reinforce learning.</li>
+                <li class="list-group-item"><strong>Check Translation:</strong> Test your translation skills to ensure you understand the meanings of words in context.</li>
+                <li class="list-group-item"><strong>Profile:</strong> Manage your personal profile, track your progress, and customize your learning experience.</li>
+                <li class="list-group-item"><strong>History:</strong> View the history of your test attempts and track your improvement over time.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Getting Started</h2>
+            <p class="card-text">To start using EnglishWordsLearning, simply sign up for an account, and begin exploring the various features available. Whether you are looking to expand your vocabulary, test your knowledge, or track your learning progress, our platform has everything you need to enhance your English language skills.</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Contact Us</h2>
+            <p class="card-text">If you have any questions or need help, please submit an issue on <a href="https://github.com/sentemon/EnglishWordsLearning">Github</a>.</p>
+        </div>
+    </div>
 </div>

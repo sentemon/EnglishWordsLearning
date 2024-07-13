@@ -1,7 +1,7 @@
 @model IEnumerable<EnglishWordsLearning.Models.HistoryLogs>
 
 @{
-    ViewData["Title"] = "History Logs of Tests of " + ViewBag.Username ?? "User";
+    ViewData["Title"] = "History Logs of Tests of " + (!string.IsNullOrEmpty(ViewBag.Username) ? ViewBag.Username : "User");
 }
 
 <h2>@ViewData["Title"]</h2>

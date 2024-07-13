@@ -36,3 +36,12 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.github-svg path {
+  fill: gray;
+  transition: fill 0.3s;
+}
+
+.github-icon:hover .github-svg path {
+  fill: #181717;
+}
