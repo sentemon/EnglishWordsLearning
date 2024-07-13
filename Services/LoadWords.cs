@@ -1,16 +1,11 @@
 using EnglishWordsLearning.Models;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Newtonsoft.Json;
 
 namespace EnglishWordsLearning.Services
 {
     public static class LoadWordsHelper
     {
-        public static readonly string JsonWordsFilePath =
-            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
-
-        private static readonly string CsvWordsFilePath =
-            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words", "words.csv");
+        private static readonly string CsvWordsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words", "words.csv");
         
         public static readonly Dictionary<string, string> Levels = new()
         {
@@ -20,21 +15,9 @@ namespace EnglishWordsLearning.Services
             { "c1", "Advanced" }
         };
 
-        public static async Task<List<WordViewModel>> LoadJsonWordsAsync()
+        public static async Task<List<Word>> LoadCsvWordsAsync(ViewDataDictionary viewData, string level = "AllLevels")
         {
-            using (var reader = new StreamReader(JsonWordsFilePath))
-            {
-                var json = await reader.ReadToEndAsync();
-
-                return JsonConvert.DeserializeObject<List<WordViewModel>>(json) ??
-                       throw new InvalidOperationException();
-            }
-        }
-
-        public static async Task<List<WordViewModel>> LoadCsvWordsAsync(ViewDataDictionary viewData,
-            string level = "AllLevels")
-        {
-            var words = new List<WordViewModel>();
+            var words = new List<Word>();
 
             try
             {
@@ -50,7 +33,7 @@ namespace EnglishWordsLearning.Services
 
                         var parts = line.Split(";");
 
-                        var word = new WordViewModel
+                        var word = new Word
                         {
                             English = parts[0],
                             Level = parts[1],
@@ -75,7 +58,7 @@ namespace EnglishWordsLearning.Services
         }
 
 
-        public static WordViewModel? GetRandomWord(List<WordViewModel> words)
+        public static Word? GetRandomWord(List<Word> words)
         {
             var random = new Random();
             return words.MinBy(w => random.Next());

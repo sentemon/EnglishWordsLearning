@@ -1,6 +1,5 @@
 using EnglishWordsLearning.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using EnglishWordsLearning.Controllers;
 using EnglishWordsLearning.Data;
 using EnglishWordsLearning.Interfaces;
 using EnglishWordsLearning.Services;
@@ -38,7 +37,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IHistoryLogs, HistoryLogsController>();
+builder.Services.AddScoped<IHistoryLogs, HistoryLogsService>();
 
 builder.Services.AddScoped<AddUsernameToViewBagFilter>();
 

@@ -25,7 +25,7 @@ namespace EnglishWordsLearning.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> AddWord(WordViewModel wordViewModel)
+        public async Task<IActionResult> AddWord(Word wordViewModel)
         {
             if (ModelState.IsValid)
             {
