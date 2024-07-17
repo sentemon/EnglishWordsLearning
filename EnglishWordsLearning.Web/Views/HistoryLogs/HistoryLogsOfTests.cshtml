@@ -1,0 +1,45 @@
+@model IEnumerable<EnglishWordsLearning.Core.Models.HistoryLogs>
+
+@{
+    ViewData["Title"] = "History Logs of Tests of " + (!string.IsNullOrEmpty(ViewBag.Username) ? ViewBag.Username : "User");
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Level</th>
+                <th>Date</th>
+                <th>Correct Answers</th>
+                <th>Total Questions</th>
+                <th>Result In Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model)
+            {
+                if (log.Username == ViewBag.Username)
+                {
+                    <tr>
+                        <td>@log.Level</td>
+                        <td>@log.Date</td>
+                        <td>@log.CorrectAnswers</td>
+                        <td>@log.TotalQuestions</td>
+                        <td>@log.ResultInPercentage</td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <div class="alert alert-info" role="alert">
+        You need to <a asp-controller="Account" asp-action="SignIn" asp-route-returnUrl="@Url.Action("Index", "Home")">Sign In</a> to view your test history.
+    </div>
+}

@@ -1,0 +1,39 @@
+@model IEnumerable<EnglishWordsLearning.Core.Models.Word>
+
+@{
+    ViewData["Title"] = "Words";
+}
+
+<div class="d-flex">
+    <h2 class="mr-2">Word List</h2>
+    <form asp-action="Index" asp-controller="Words" method="get" class="d-flex">
+        <input placeholder="Search..." type="text" name="SearchTerm" class="form-control">
+        <button type="submit" class="btn btn-link pb-0"><i class="fa fa-search h-100"></i></button>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Word</th>
+        <th>Translation</th>
+        <th>Level</th>
+        <th>Transcription</th>
+        <th>Class</th>
+        @* <th>Action</th> *@
+    </tr>
+    </thead>
+    @* <a href="@Url.Action("AddWord", "Words")">Add New Word</a> *@
+    <tbody>
+    @foreach (var word in Model)
+    {
+        <tr>
+            <td>@word.English</td>
+            <td>@word.Russian</td>
+            <td>@word.Level.ToUpper()</td>
+            <td>@word.Transcription</td>
+            <td>@word.Class</td>
+        </tr>
+    }
+    </tbody>
+</table>

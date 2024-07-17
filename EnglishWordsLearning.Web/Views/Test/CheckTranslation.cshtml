@@ -1,0 +1,69 @@
+@model EnglishWordsLearning.Core.Models.Word
+
+@{
+    ViewData["Title"] = "Check Translation";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Select Level and Translate the Word</h2>
+            
+            <form asp-controller="Test" asp-action="CheckTranslation" method="get" id="levelForm">
+                <div class="form-group">
+                    <label for="level">Select Level</label>
+                    <select class="form-control" id="level" name="level">
+                        <option value="AllLevels">All Levels</option>
+                        <option value="a1;a2">Beginner</option>
+                        <option value="b1;b2">Intermediate</option>
+                        <option value="c1">Advanced</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Start Test</button>
+            </form>
+            
+            <hr />
+            
+            <h3 class="text-center mb-3">Level: @ViewBag.DisplayedLevel</h3>
+
+            <form asp-controller="Test" asp-action="CheckTranslation" method="post" id="translationForm">
+                <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />
+                <div class="form-group">
+                    <label for="russian">Russian Word</label>
+                    <input type="text" class="form-control" id="russian" name="russian" value="@Model?.Russian" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="userTranslation">Your Translation</label>
+                    <input type="text" class="form-control" id="userTranslation" name="userTranslation" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Check Translation</button>
+            </form>
+
+            @if (ViewBag.Result != null)
+            {
+                <div class="alert alert-@(ViewBag.Result == "Correct!" ? "success" : "danger") mt-3">
+                    @ViewBag.Result
+                </div>
+            }
+
+            @if (ViewBag.TotalQuestions > 0)
+            {
+                <p class="text-center mt-3">
+                    Your result is @ViewBag.CorrectAnswers / @ViewBag.TotalQuestions
+                    | @Math.Round(((double)ViewBag.CorrectAnswers / (double)ViewBag.TotalQuestions * 100), 2)%
+                </p>
+                
+                <form style="text-align: center" asp-controller="Test" asp-action="FinishTranslation" method="post">
+                    <button type="submit" class="btn btn-success" value="@ViewBag.SelectedLevel">Finish</button>
+                </form>
+            }
+
+            @if (ViewData["ValidateMessage"] != null)
+            {
+                <div class="alert alert-danger mt-3">@ViewData["ValidateMessage"]</div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="js/site.js"></script>
