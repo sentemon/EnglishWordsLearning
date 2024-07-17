@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+  db:
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: postgres
+    image: postgres:14.1-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data: 
