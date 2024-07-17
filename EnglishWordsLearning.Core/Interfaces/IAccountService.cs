@@ -7,6 +7,7 @@ public interface IAccountService
     public bool SignInValidateUser(string username, string password);
 
     public string HashPassword(string password);
+    public bool CheckHashPasswords(string enterPassword, string userPassword);
 
     List<User> LoadUsersFromDb();
 

@@ -24,7 +24,7 @@ public class AccountRepository : Core.Interfaces.IAccountService
         List<User> users = LoadUsersFromDb();
         var user = users.FirstOrDefault(u => u.Username == username);
 
-        if (user != null && user.Password == HashPassword(password))
+        if (user != null && CheckHashPasswords(password, user.Password))
         {
             return true;
         }
@@ -87,8 +87,15 @@ public class AccountRepository : Core.Interfaces.IAccountService
         
     public string HashPassword(string password)
     {
-        // return BCrypt.Net.BCrypt.HashPassword(password); //ToDo: change it
-        return password;
+        var hashPassword = BCrypt.Net.BCrypt.HashPassword(password);
+        return hashPassword;
+    }
+
+    public bool CheckHashPasswords(string enterPassword, string userPassword)
+    {
+        var hashPassword = BCrypt.Net.BCrypt.Verify(enterPassword, userPassword);
+
+        return hashPassword;
     }
 
     public List<User> LoadUsersFromDb()
