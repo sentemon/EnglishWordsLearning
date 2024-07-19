@@ -21,10 +21,12 @@ document.getElementById("translationForm").onsubmit = function() {
 
 // 
 function showPassword(inputId) {
-    var x = document.getElementById(inputId);
-    if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
+    let checkbox = document.getElementById(inputId);
+    
+    if (checkbox.type === "password") {
+        checkbox.type = "text";
+    } 
+    else {
+        checkbox.type = "password";
     }
 }

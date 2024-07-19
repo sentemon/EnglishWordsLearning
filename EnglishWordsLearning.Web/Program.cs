@@ -36,9 +36,8 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<IAccountService, AccountRepository>();
-builder.Services.AddScoped<IHistoryLogs, HistoryLogsRepository>();
-builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IHistoryLogsRepository, HistoryLogsRepositoryRepository>();
 
 builder.Services.AddScoped<AddUsernameToViewBagFilter>();
 

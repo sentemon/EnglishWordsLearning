@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnglishWordsLearning.Core.Interfaces;
 
-public interface IHistoryLogs
+public interface IHistoryLogsRepository
 {
     DbSet<HistoryLogs> GetHistoryLogs();
     Task HistoryLogsOfTestsAdd(int totalQuestions, int correctAnswers, double resultInPercentage, string username, string level = "AllLevels");

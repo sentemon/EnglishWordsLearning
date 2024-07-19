@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnglishWordsLearning.Infrastructure.Repositories;
 
-public class HistoryLogsRepository : IHistoryLogs
+public class HistoryLogsRepositoryRepository : IHistoryLogsRepository
 {
     private readonly AppDbContext _appDbContext;
 
-    public HistoryLogsRepository(AppDbContext appDbContext)
+    public HistoryLogsRepositoryRepository(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }

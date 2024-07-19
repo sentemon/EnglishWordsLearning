@@ -1,11 +1,17 @@
-@model EnglishWordsLearning.Core.Models.User;
+@model EnglishWordsLearning.Core.Models.User
 
-<div class="card mt-5">
-    <div class="card-header bg-primary text-white">
-        <h2>Username: @Model.Username</h2>
-    </div>
-    <div class="card-body">
-        <p class="card-text"><strong>Full Name: @Model.FirstName @Model.LastName</strong> </p>
-        <p class="card-text"><strong>Email: @Model.Email</strong> </p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="text-center">Username: @Model.Username</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong>Full Name: @Model.FirstName @Model.LastName</strong></p>
+                    <p class="card-text"><strong>Email: @Model.Email</strong></p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

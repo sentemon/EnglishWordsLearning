@@ -2,7 +2,7 @@ using EnglishWordsLearning.Core.Models;
 
 namespace EnglishWordsLearning.Core.Interfaces;
 
-public interface IAccountService
+public interface IAccountRepository
 {
     public bool SignInValidateUser(string username, string password);
 
@@ -12,6 +12,7 @@ public interface IAccountService
     List<User> LoadUsersFromDb();
 
     public string GetCurrentUsername();
+    public User GetCurrentUser();
 
     public void SaveUserToDb(User user);
 

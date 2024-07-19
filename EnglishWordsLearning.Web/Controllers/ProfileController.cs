@@ -5,11 +5,11 @@ namespace EnglishWordsLearning.Web.Controllers;
 
 public class ProfileController : Controller
 {
-    private readonly IProfileRepository _profileRepository;
+    private readonly IAccountRepository _accountRepository;
 
-    public ProfileController(IProfileRepository profileRepository)
+    public ProfileController(IAccountRepository accountRepository)
     {
-        _profileRepository = profileRepository;
+        _accountRepository = accountRepository;
     }
 
     public IActionResult Index()
@@ -20,7 +20,7 @@ public class ProfileController : Controller
     [Route("Profile/{username}")]
     public IActionResult Index(string username)
     {
-        var userProfile = _profileRepository.GetUser(username);
+        var userProfile = _accountRepository.GetCurrentUser();
             
         return View(userProfile);
     }

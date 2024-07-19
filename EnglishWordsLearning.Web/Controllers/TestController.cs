@@ -6,11 +6,11 @@ namespace EnglishWordsLearning.Web.Controllers;
 
 public class TestController : Controller
 {
-    private readonly IHistoryLogs _historyLogs;
+    private readonly IHistoryLogsRepository _historyLogsRepository;
 
-    public TestController(IHistoryLogs historyLogs)
+    public TestController(IHistoryLogsRepository historyLogsRepository)
     {
-        _historyLogs = historyLogs;
+        _historyLogsRepository = historyLogsRepository;
     }
 
     // private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
@@ -81,7 +81,7 @@ public class TestController : Controller
             string level = HttpContext.Session.GetString("SelectedLevel") ?? "AllLevels";
             string username = ViewBag.Username;
 
-            _historyLogs.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
+            _historyLogsRepository.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
         }
 
         HttpContext.Session.Remove("correctAnswers");

@@ -3,11 +3,12 @@ using EnglishWordsLearning.Core.Models;
 using System.Text.RegularExpressions;
 using EnglishWordsLearning.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
+using EnglishWordsLearning.Core.Interfaces;
 
 
 namespace EnglishWordsLearning.Infrastructure.Repositories;
 
-public class AccountRepository : Core.Interfaces.IAccountService
+public class AccountRepository : IAccountRepository
 {
     private readonly AppDbContext _appDbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -110,6 +111,14 @@ public class AccountRepository : Core.Interfaces.IAccountService
         var username = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         return username ?? string.Empty;
+    }
+
+    public User GetCurrentUser()
+    {
+        var username = GetCurrentUsername();
+        var user = _appDbContext.Users.Single(u => u.Username == username);
+
+        return user;
     }
 
     public void SaveUserToDb(User user)

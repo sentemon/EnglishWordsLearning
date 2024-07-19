@@ -6,18 +6,18 @@ namespace EnglishWordsLearning.Web.ActionFilters;
 
 public class AddUsernameToViewBagFilter : IActionFilter
 {
-    private readonly IAccountService _accountService;
+    private readonly IAccountRepository _accountRepository;
 
-    public AddUsernameToViewBagFilter(IAccountService accountService)
+    public AddUsernameToViewBagFilter(IAccountRepository accountRepository)
     {
-        _accountService = accountService;
+        _accountRepository = accountRepository;
     }
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
         if (context.Controller is Controller controller)
         {
-            var username = _accountService.GetCurrentUsername();
+            var username = _accountRepository.GetCurrentUsername();
             controller.ViewBag.Username = username;
         }
     }
