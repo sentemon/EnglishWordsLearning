@@ -1,7 +1,7 @@
 # EnglishWordsLearning
 
 ## Description
-EnglishWordsLearning is a web application for learning English words using flashcards and tests.
+EnglishWordsLearning is a web application designed to help users learn English words through the use of flashcards and tests. **Currently, words can only be learned from Russian to English.**
 
 ## Requirements
 - .NET SDK 9.0
@@ -10,23 +10,25 @@ EnglishWordsLearning is a web application for learning English words using flash
 
 ## Installation
 
-1. Clone the repository:
+Follow these steps to install and run the application:
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/sentemon/EnglishWordsLearning.git
    cd EnglishWordsLearning/EnglishWordsLearning.Web
    ```
 
-2. 
-    ```bash
-    docker compose up -d --build
-    ```
+2. **Build and start the Docker containers:**
+   ```bash
+   docker compose up -d --build
+   ```
 
-3. 
-    ```bash
-    dotnet ef database update
-    ```
+3. **Update the database:**
+   ```bash
+   dotnet ef database update
+   ```
 
-4. 
-    ```bash
-    dotnet run
-    ```
+4. **Run the application:**
+   ```bash
+   dotnet run
+   ```
