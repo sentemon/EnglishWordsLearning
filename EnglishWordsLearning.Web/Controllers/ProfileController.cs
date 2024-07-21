@@ -14,9 +14,9 @@ namespace EnglishWordsLearning.Web.Controllers;
         }
 
         [Route("Profile/{username}")]
-        public IActionResult Index(string username)
+        public async Task<IActionResult> Index(string username)
         {
-            var userProfile = _profileService.GetUserProfile(username);
+            var userProfile = await _profileService.GetUserProfile(username);
             
             if (string.IsNullOrEmpty(userProfile.Username))
             {
@@ -27,9 +27,9 @@ namespace EnglishWordsLearning.Web.Controllers;
         }
 
         [Route("Profile/Edit/{username}")]
-        public IActionResult Edit(string username)
+        public async Task<IActionResult> Edit(string username)
         {
-            var userProfile = _profileService.GetUserProfile(username);
+            var userProfile = await _profileService.GetUserProfile(username);
             
             if (string.IsNullOrEmpty(userProfile.Username))
             {
@@ -41,9 +41,9 @@ namespace EnglishWordsLearning.Web.Controllers;
 
         [HttpPost]
         [Route("Profile/Edit/{username}")]
-        public IActionResult Edit(string username, User model)
+        public async Task<IActionResult> Edit(string username, User model)
         {
-            var success = _profileService.UpdateUserProfile(username, model);
+            var success = await _profileService.UpdateUserProfile(username, model);
             
             if (!success)
             {

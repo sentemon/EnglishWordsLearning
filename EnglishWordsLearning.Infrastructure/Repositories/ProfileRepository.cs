@@ -14,14 +14,14 @@ namespace EnglishWordsLearning.Infrastructure.Repositories
             _appDbContext = appDbContext;
         }
 
-        public User? GetUserProfile(string username)
+        public async Task<User?> GetUserProfile(string username)
         {
-            return _appDbContext.Users.SingleOrDefault(u => u.Username == username);
+            return  await Task.FromResult(_appDbContext.Users.SingleOrDefault(u => u.Username == username));
         }
 
-        public bool UpdateUserProfile(string username, User newProfile)
+        public async Task<bool> UpdateUserProfile(string username, User newProfile)
         {
-            var existingProfile = GetUserProfile(username);
+            var existingProfile = await GetUserProfile(username);
 
             if (existingProfile == null)
             {
@@ -32,7 +32,7 @@ namespace EnglishWordsLearning.Infrastructure.Repositories
             existingProfile.LastName = newProfile.LastName;
             existingProfile.Email = newProfile.Email;
             
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
             
             return true;
         }

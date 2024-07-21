@@ -5,8 +5,8 @@ namespace EnglishWordsLearning.Core.Interfaces
 {
     public interface IProfileRepository
     {
-        public User? GetUserProfile(string username);
-        public bool UpdateUserProfile(string username, User profile);
+        public Task<User?> GetUserProfile(string username);
+        public Task<bool> UpdateUserProfile(string username, User profile);
         // public bool ChangePassword(string username, ChangePassword model);
     }
 }

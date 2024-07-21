@@ -13,14 +13,14 @@ namespace EnglishWordsLearning.Application.Services
             _profileRepository = profileRepository;
         }
 
-        public User? GetUserProfile(string username)
+        public async Task<User?> GetUserProfile(string username)
         {
-            return _profileRepository.GetUserProfile(username);
+            return await _profileRepository.GetUserProfile(username);
         }
 
-        public bool UpdateUserProfile(string username, User profile)
+        public async Task<bool> UpdateUserProfile(string username, User profile)
         {
-            return _profileRepository.UpdateUserProfile(username, profile);
+            return await _profileRepository.UpdateUserProfile(username, profile);
         }
 
         // public bool ChangePassword(string username, ChangePassword model)
