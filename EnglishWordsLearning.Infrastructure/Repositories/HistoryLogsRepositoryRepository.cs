@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnglishWordsLearning.Infrastructure.Repositories;
 
-public class HistoryLogsRepositoryRepository : IHistoryLogsRepository
+public class HistoryLogsRepository : IHistoryLogsRepository
 {
     private readonly AppDbContext _appDbContext;
 
-    public HistoryLogsRepositoryRepository(AppDbContext appDbContext)
+    public HistoryLogsRepository(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }
@@ -27,7 +27,7 @@ public class HistoryLogsRepositoryRepository : IHistoryLogsRepository
         {
             Id = Guid.NewGuid(),
             Date = DateTime.UtcNow,
-            Level = LoadWordsHelper.Levels[level],
+            Level = level,
             TotalQuestions = totalQuestions,
             CorrectAnswers = correctAnswers,
             ResultInPercentage = resultInPercentage,

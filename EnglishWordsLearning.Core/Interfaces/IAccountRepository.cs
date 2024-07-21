@@ -4,20 +4,10 @@ namespace EnglishWordsLearning.Core.Interfaces;
 
 public interface IAccountRepository
 {
-    public bool SignInValidateUser(string username, string password);
-
-    public string HashPassword(string password);
-    public bool CheckHashPasswords(string enterPassword, string userPassword);
-
     List<User> LoadUsersFromDb();
-
-    public string GetCurrentUsername();
-    public User GetCurrentUser();
+    
+    public User GetCurrentUser(string username);
 
     public void SaveUserToDb(User user);
 
-    public bool SignUpValidateUserName(string username);
-    public bool SignUpValidateUserPassword(string password);
-    public bool SignUpValidateUserEmail(string? email);
-    public bool SignUpValidateUserFullName(string firstName, string lastName);
 }

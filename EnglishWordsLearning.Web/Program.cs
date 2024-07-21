@@ -1,3 +1,4 @@
+using EnglishWordsLearning.Application.Services;
 using EnglishWordsLearning.Web.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using EnglishWordsLearning.Infrastructure.Data;
@@ -7,24 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Configure DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-     options.UseNpgsql(connectionString,
-             dbContextOptionsBuilder => dbContextOptionsBuilder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+    options.UseNpgsql(connectionString,
+        dbContextOptionsBuilder => dbContextOptionsBuilder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+// Add services to the container
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AddUsernameToViewBagFilter>();
+});
 
-builder.Services.AddAuthentication(
-    CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(option =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
     {
-        option.LoginPath = "/Account/SignIn";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.LoginPath = "/Account/SignIn";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
-
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -36,15 +38,11 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddHttpContextAccessor();
 
+// Register repositories and services
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IHistoryLogsRepository, HistoryLogsRepositoryRepository>();
-
-builder.Services.AddScoped<AddUsernameToViewBagFilter>();
-
-builder.Services.AddControllersWithViews(options =>
-{
-    options.Filters.Add<AddUsernameToViewBagFilter>();
-});
+builder.Services.AddScoped<IHistoryLogsRepository, HistoryLogsRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IHistoryLogsService, HistoryLogsService>();
 
 var app = builder.Build();
 
@@ -75,7 +73,6 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "Profile",
     pattern: "Profile/{username}",
-    defaults: new { controller = "Profile", action = "Index", username="" });
-
+    defaults: new { controller = "Profile", action = "Index", username = "" });
 
 app.Run();

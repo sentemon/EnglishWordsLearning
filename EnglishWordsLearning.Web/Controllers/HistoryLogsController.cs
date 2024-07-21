@@ -5,16 +5,16 @@ namespace EnglishWordsLearning.Web.Controllers;
 
 public class HistoryLogsController : Controller
 {
-    private readonly IHistoryLogsRepository _historyLogsRepository;
+    private readonly IHistoryLogsService _historyLogsService;
 
-    public HistoryLogsController(IHistoryLogsRepository historyLogsRepository)
+    public HistoryLogsController(IHistoryLogsService historyLogsService)
     {
-        _historyLogsRepository = historyLogsRepository;
+        _historyLogsService = historyLogsService;
     }
 
     public IActionResult HistoryLogsOfTests()
     {
-        var historyLogs = _historyLogsRepository.GetHistoryLogs();
+        var historyLogs = _historyLogsService.GetHistoryLogs();
 
         return View(historyLogs);
     }

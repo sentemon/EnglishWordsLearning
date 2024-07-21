@@ -1,6 +1,6 @@
+using EnglishWordsLearning.Application.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using EnglishWordsLearning.Infrastructure.Repositories;
 
 namespace EnglishWordsLearning.Web.Controllers;
 

@@ -10,11 +10,11 @@ namespace EnglishWordsLearning.Web.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IAccountService _accountService;
 
-    public AccountController(IAccountRepository accountRepository)
+    public AccountController(IAccountService accountService)
     {
-        _accountRepository = accountRepository;
+        _accountService = accountService;
     }
 
     public IActionResult SignIn()
@@ -34,7 +34,7 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (_accountRepository.SignInValidateUser(modelLogin.Username, modelLogin.Password))
+            if (_accountService.SignInValidateUser(modelLogin.Username, modelLogin.Password))
             {
                 var claims = new List<Claim>
                 {
@@ -87,11 +87,11 @@ public class AccountController : Controller
                     LastName = model.LastName,
                     Email = model.Email,
                     Username = model.Username,
-                    Password = _accountRepository.HashPassword(model.Password)
+                    Password = _accountService.HashPassword(model.Password)
                 };
 
                 // Add the new user to the database
-                _accountRepository.SaveUserToDb(newUser);
+                _accountService.SaveUserToDb(newUser);
 
                 return RedirectToAction("SignIn");
             }
@@ -110,30 +110,29 @@ public class AccountController : Controller
     //ToDo: wyswietlac dokladny blad
     public bool SignUpValidateUser(string firstName, string lastName, string username, string password, string? email)
     {
-        List<User> users = _accountRepository.LoadUsersFromDb();
-        var user = users.FirstOrDefault(u => u.Username == username);
+        var isUsernameExists = _accountService.IsUsernameExists(username);
             
-        if (user != null)
+        if (isUsernameExists)
         {
             ViewData["ValidateMessage"] = "Username already exists.";
             return false;
         }
 
-        if (!(_accountRepository.SignUpValidateUserName(username) && _accountRepository.SignUpValidateUserPassword(password)))
+        if (!(_accountService.SignUpValidateUserName(username) && _accountService.SignUpValidateUserPassword(password)))
         {
-            if (!_accountRepository.SignUpValidateUserName(username))
+            if (!_accountService.SignUpValidateUserName(username))
             {
                 ViewData["ValidateMessage"] = "Username must contain only letters and numbers.";
             }
-            else if (_accountRepository.SignUpValidateUserPassword(password))
+            else if (_accountService.SignUpValidateUserPassword(password))
             {
                 ViewData["ValidateMessage"] = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character.";
             }
-            else if (!_accountRepository.SignUpValidateUserEmail(email))
+            else if (!_accountService.SignUpValidateUserEmail(email))
             {
                 ViewData["ValidateMessage"] = "Invalid email address.";
             }
-            else if (!_accountRepository.SignUpValidateUserFullName(firstName, lastName))
+            else if (!_accountService.SignUpValidateUserFullName(firstName, lastName))
             {
                 ViewData["ValidateMessage"] = "First name and last name must contain only letters.";
             }

@@ -1,6 +1,6 @@
 using EnglishWordsLearning.Core.Models;
 
-namespace EnglishWordsLearning.Infrastructure.Repositories;
+namespace EnglishWordsLearning.Application.Common;
 
 public static class LoadWordsHelper
 {

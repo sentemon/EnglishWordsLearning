@@ -1,4 +1,4 @@
-using EnglishWordsLearning.Infrastructure.Repositories;
+using EnglishWordsLearning.Application.Common;
 using EnglishWordsLearning.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +6,11 @@ namespace EnglishWordsLearning.Web.Controllers;
 
 public class TestController : Controller
 {
-    private readonly IHistoryLogsRepository _historyLogsRepository;
+    private readonly IHistoryLogsService _historyLogsService;
 
-    public TestController(IHistoryLogsRepository historyLogsRepository)
+    public TestController(IHistoryLogsService historyLogsService)
     {
-        _historyLogsRepository = historyLogsRepository;
+        _historyLogsService = historyLogsService;
     }
 
     // private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
@@ -81,7 +81,7 @@ public class TestController : Controller
             string level = HttpContext.Session.GetString("SelectedLevel") ?? "AllLevels";
             string username = ViewBag.Username;
 
-            _historyLogsRepository.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
+            _historyLogsService.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
         }
 
         HttpContext.Session.Remove("correctAnswers");
