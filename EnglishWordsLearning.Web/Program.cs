@@ -16,10 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         dbContextOptionsBuilder => dbContextOptionsBuilder.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
 
 // Add services to the container
-builder.Services.AddControllersWithViews(options =>
-{
-    options.Filters.Add<AddUsernameToViewBagFilter>();
-});
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -46,6 +43,13 @@ builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHistoryLogsService, HistoryLogsService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+
+builder.Services.AddScoped<AddUsernameToViewBagFilter>();
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AddUsernameToViewBagFilter>();
+});
 
 var app = builder.Build();
 

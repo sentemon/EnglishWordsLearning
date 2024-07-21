@@ -1,4 +1,4 @@
-@model EnglishWordsLearning.Core.Models.User
+@model EnglishWordsLearning.Core.Models.UserDto
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -28,7 +28,7 @@
                         <input asp-for="Email" class="form-control" readonly/>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                    <form asp-controller="Profile" asp-action="Edit" asp-route-username="@Model.Username">
+                    <form asp-controller="Profile" asp-action="Edit" asp-route-username="@Model.Username" >
                         <button  class="btn btn-primary">Edit Profile</button>
                     </form>
                 </div>
