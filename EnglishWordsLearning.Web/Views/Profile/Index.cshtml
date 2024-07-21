@@ -5,11 +5,32 @@
         <div class="col-md-8">
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="text-center">Username: @Model.Username</h2>
+                    <h2 class="text-center">Profile: @Model.Username</h2>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"><strong>Full Name: @Model.FirstName @Model.LastName</strong></p>
-                    <p class="card-text"><strong>Email: @Model.Email</strong></p>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" readonly />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" readonly/>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" readonly/>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" readonly/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <form asp-controller="Profile" asp-action="Edit" asp-route-username="@Model.Username">
+                        <button  class="btn btn-primary">Edit Profile</button>
+                    </form>
                 </div>
             </div>
         </div>

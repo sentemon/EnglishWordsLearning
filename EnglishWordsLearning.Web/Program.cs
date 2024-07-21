@@ -41,8 +41,11 @@ builder.Services.AddHttpContextAccessor();
 // Register repositories and services
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IHistoryLogsRepository, HistoryLogsRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHistoryLogsService, HistoryLogsService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 var app = builder.Build();
 
