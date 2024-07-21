@@ -10,6 +10,7 @@ WORKDIR /source
 # Copy project files and restore dependencies
 COPY ./EnglishWordsLearning.sln .
 COPY ./global.json .
+COPY ./EnglishWordsLearning.Application/EnglishWordsLearning.Application.csproj ./EnglishWordsLearning.Application/
 COPY ./EnglishWordsLearning.Web/EnglishWordsLearning.Web.csproj ./EnglishWordsLearning.Web/
 COPY ./EnglishWordsLearning.Core/EnglishWordsLearning.Core.csproj ./EnglishWordsLearning.Core/
 COPY ./EnglishWordsLearning.Infrastructure/EnglishWordsLearning.Infrastructure.csproj ./EnglishWordsLearning.Infrastructure/
