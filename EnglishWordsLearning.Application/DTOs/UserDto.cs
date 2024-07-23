@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EnglishWordsLearning.Core.Models;
+namespace EnglishWordsLearning.Application.DTOs;
 
 public class UserDto
 {

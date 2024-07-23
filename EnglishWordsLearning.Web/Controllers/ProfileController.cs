@@ -1,5 +1,5 @@
 using EnglishWordsLearning.Core.Interfaces;
-using EnglishWordsLearning.Core.Models;
+using EnglishWordsLearning.Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
