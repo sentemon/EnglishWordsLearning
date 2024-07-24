@@ -31,7 +31,7 @@ public class TestController : Controller
     {
         var words = await LoadWordsHelper.LoadCsvWordsAsync(level);
         var word = words.FirstOrDefault(w => w.Russian == russian);
-
+        
         int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
         int totalQuestions = HttpContext.Session.GetInt32("totalQuestions") ?? 0;
 
@@ -55,6 +55,7 @@ public class TestController : Controller
 
 
         // Save correct answers and total questions back to session
+        HttpContext.Session.SetString("level", LoadWordsHelper.Levels[level]);
         HttpContext.Session.SetInt32("correctAnswers", correctAnswers);
         HttpContext.Session.SetInt32("totalQuestions", totalQuestions);
 
@@ -78,12 +79,13 @@ public class TestController : Controller
             int totalQuestions = Convert.ToInt32(HttpContext.Session.GetInt32("totalQuestions"));
             int correctAnswers = Convert.ToInt32(HttpContext.Session.GetInt32("correctAnswers"));
             double resultInPercentage = totalQuestions > 0 ? (double)correctAnswers / totalQuestions * 100 : 0.0;
-            string level = HttpContext.Session.GetString("SelectedLevel") ?? "AllLevels";
+            string level = HttpContext.Session.GetString("level") ?? "AllLevels";
             string username = ViewBag.Username;
 
             _historyLogsService.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
         }
-
+        
+        HttpContext.Session.Remove("level");
         HttpContext.Session.Remove("correctAnswers");
         HttpContext.Session.Remove("totalQuestions");
 
