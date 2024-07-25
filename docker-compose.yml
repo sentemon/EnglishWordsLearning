@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   server:
-    container_name: server
+    container_name: englishwordslearning-server
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,7 +16,7 @@ services:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=postgres;Password=mysecretpassword;Database=postgres
 
   db:
-    container_name: db
+    container_name: englishwordslearning-db
     image: postgres:14.1-alpine
     ports:
       - "5432:5432"

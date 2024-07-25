@@ -19,12 +19,12 @@ Follow these steps to install and run the application:
 
 2. **Build and start the Docker containers:**
    ```bash
-   docker compose up --build -d
+   docker compose up -d --build
    ```
 
 3. **Accessing the Application**
    ```
-   Once the containers are up and running, you can access the application via your web browser at http://localhost:8080.
+   You can access the application via your web browser at http://localhost:8080
    ```
 4. **Stopping the Application**
    ```bash
