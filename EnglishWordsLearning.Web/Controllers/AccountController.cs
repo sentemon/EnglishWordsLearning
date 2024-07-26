@@ -112,7 +112,7 @@ public class AccountController : Controller
     {
         var isUsernameExists = _accountService.IsUsernameExists(username);
             
-        if (isUsernameExists)
+        if (!isUsernameExists)
         {
             ViewData["ValidateMessage"] = "Username already exists.";
             return false;
