@@ -1,6 +1,7 @@
 using EnglishWordsLearning.Application.Common;
 using EnglishWordsLearning.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using EnglishWordsLearning.Core.Models;
 
 namespace EnglishWordsLearning.Web.Controllers;
 
@@ -15,47 +16,41 @@ public class TestController : Controller
         _myMemoryService = myMemoryService;
     }
 
-    // private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "words.json");
-
     public async Task<IActionResult> CheckTranslation(string userLanguage = "Ukrainian", string level = "AllLevels")
     {
-        userLanguage = LanguageDictionary.GetLanguageDictionary(userLanguage);
-        
+        if (!LoadWordsHelper.Levels.ContainsKey(level))
+        {
+            return BadRequest("Invalid level");
+        }
+
+        ViewBag.LanguageDictionary = LanguageDictionary.GetLanguageDictionary();
         ViewBag.DisplayedLevel = LoadWordsHelper.Levels[level];
         ViewBag.SelectedLevel = level;
 
-        var words = await LoadWordsHelper.LoadCsvWordsAsync(level);
-        var randomWord = LoadWordsHelper.GetRandomWord(words);
-        
-        var translation = await _myMemoryService.TranslateAsync(userLanguage, randomWord.English);
-        randomWord.Translation = translation;
+        var randomWord = await GetRandomTranslatedWord(userLanguage, level);
 
         return View(randomWord);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CheckTranslation(string translation, string userTranslation, string level, string userLanguage = "Ukrainian")
+    public async Task<IActionResult> CheckTranslation(string englishWord, string userTranslation, string level,
+        string userLanguage = "Ukrainian")
     {
-        userLanguage = LanguageDictionary.GetLanguageDictionary(userLanguage);
-        
+        if (!LoadWordsHelper.Levels.ContainsKey(level))
+        {
+            return BadRequest("Invalid level");
+        }
+
+        ViewBag.LanguageDictionary = LanguageDictionary.GetLanguageDictionary();
         var words = await LoadWordsHelper.LoadCsvWordsAsync(level);
-        var word = words.FirstOrDefault(w => w.Translation == translation);
-        
+        var word = words.FirstOrDefault(w => w.English == englishWord);
+
         int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
         int totalQuestions = HttpContext.Session.GetInt32("totalQuestions") ?? 0;
 
-        var randomWord = LoadWordsHelper.GetRandomWord(words);
-        translation = await _myMemoryService.TranslateAsync(userLanguage, randomWord.English);
-        randomWord.Translation = translation;
-
         if (word != null)
         {
-            randomWord = LoadWordsHelper.GetRandomWord(words);
-            translation = await _myMemoryService.TranslateAsync(userLanguage, randomWord.English);
-            randomWord.Translation = translation;
-            
             totalQuestions++;
-
             if (word.English.Equals(userTranslation, StringComparison.OrdinalIgnoreCase))
             {
                 correctAnswers++;
@@ -63,46 +58,52 @@ public class TestController : Controller
             }
             else
             {
-                ViewBag.Result = "Incorrect. The correct translation is: " + word.English;
+                ViewBag.Result = $"Incorrect. The correct translation is: {word.English}";
             }
         }
-
 
         // Save correct answers and total questions back to session
         HttpContext.Session.SetString("level", LoadWordsHelper.Levels[level]);
         HttpContext.Session.SetInt32("correctAnswers", correctAnswers);
         HttpContext.Session.SetInt32("totalQuestions", totalQuestions);
 
-
         // Pass the result and count to the view
         ViewBag.CorrectAnswers = correctAnswers;
         ViewBag.TotalQuestions = totalQuestions;
-
         ViewBag.DisplayedLevel = LoadWordsHelper.Levels[level];
         ViewBag.SelectedLevel = level;
 
+        var randomWord = await GetRandomTranslatedWord(userLanguage, level);
+
         return View(randomWord);
     }
-
-
 
     public IActionResult FinishTranslation()
     {
         if (User.Identity != null && User.Identity.IsAuthenticated)
         {
-            int totalQuestions = Convert.ToInt32(HttpContext.Session.GetInt32("totalQuestions"));
-            int correctAnswers = Convert.ToInt32(HttpContext.Session.GetInt32("correctAnswers"));
+            int totalQuestions = HttpContext.Session.GetInt32("totalQuestions") ?? 0;
+            int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
             double resultInPercentage = totalQuestions > 0 ? (double)correctAnswers / totalQuestions * 100 : 0.0;
             string level = HttpContext.Session.GetString("level") ?? "AllLevels";
-            string username = ViewBag.Username;
+            string username = User.Identity.Name;
 
             _historyLogsService.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
         }
-        
+
         HttpContext.Session.Remove("level");
         HttpContext.Session.Remove("correctAnswers");
         HttpContext.Session.Remove("totalQuestions");
 
         return RedirectToAction("CheckTranslation");
+    }
+
+    private async Task<Word> GetRandomTranslatedWord(string userLanguage, string level)
+    {
+        var words = await LoadWordsHelper.LoadCsvWordsAsync(level);
+        var randomWord = LoadWordsHelper.GetRandomWord(words);
+        var translation = await _myMemoryService.TranslateAsync(userLanguage, randomWord.English);
+        randomWord.Translation = translation;
+        return randomWord;
     }
 }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace EnglishWordsLearning.Application.Common;
 
 public static class LanguageDictionary
@@ -160,8 +157,5 @@ public static class LanguageDictionary
         { "Zulu", "zu-ZA" }
     };
     
-    public static string GetLanguageDictionary(string key)
-    {
-        return _languageDictionary[key];
-    }
+    public static Dictionary<string, string> GetLanguageDictionary() => _languageDictionary;
 }

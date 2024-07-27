@@ -1,7 +1,8 @@
-@model EnglishWordsLearning.Core.Models.Word
+@model EnglishWordsLearning.Core.Models.Word;
 
 @{
     ViewData["Title"] = "Check Translation";
+    var languageDictionary = ViewBag.LanguageDictionary as Dictionary<string, string>;
 }
 
 <div class="container mt-5">
@@ -19,6 +20,17 @@
                         <option value="c1">Advanced</option>
                     </select>
                 </div>
+                
+                <div class="form-group">
+                    <label for="userLanguage">Select Language</label>
+                    <select class="form-control" id="userLanguage" name="userLanguage">
+                        @foreach (var lang in languageDictionary)
+                        {
+                            <option value="@lang.Value">@lang.Key</option>
+                        }
+                    </select>
+                </div>
+                
                 <button type="submit" class="btn btn-primary btn-block">Start Test</button>
             </form>
             
@@ -28,6 +40,8 @@
 
             <form asp-controller="Test" asp-action="CheckTranslation" method="post" id="translationForm">
                 <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />
+                <input type="hidden" name="userLanguage" value="@ViewBag.SelectedLanguage" />
+                <input type="hidden" name="englishWord" value="@Model.English" />
                 <div class="form-group">
                     <label for="translation">User Language Word</label>
                     <input type="text" class="form-control" id="translation" name="translation" value="@Model.Translation" readonly />
