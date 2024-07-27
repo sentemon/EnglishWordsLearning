@@ -44,6 +44,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHistoryLogsService, HistoryLogsService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 
+builder.Services.AddTransient<IMyMemoryService, MyMemoryService>();
+
 builder.Services.AddScoped<AddUsernameToViewBagFilter>();
 
 builder.Services.AddControllersWithViews(options =>
