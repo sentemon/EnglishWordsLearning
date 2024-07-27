@@ -25,4 +25,6 @@ public class User
     [Required(ErrorMessage = "Password is required")]
     [DataType(DataType.Password)]
     public required string Password { get; set; }
+    
+    // language to translate
 }

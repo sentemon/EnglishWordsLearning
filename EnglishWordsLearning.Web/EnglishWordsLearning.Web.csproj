@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\data\words\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EnglishWordsLearning.Application\EnglishWordsLearning.Application.csproj" />
     <ProjectReference Include="..\EnglishWordsLearning.Core\EnglishWordsLearning.Core.csproj" />
   </ItemGroup>

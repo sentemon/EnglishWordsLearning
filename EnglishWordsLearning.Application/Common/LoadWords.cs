@@ -1,3 +1,4 @@
+using EnglishWordsLearning.Application.Services;
 using EnglishWordsLearning.Core.Models;
 
 namespace EnglishWordsLearning.Application.Common;
@@ -37,10 +38,10 @@ public static class LoadWordsHelper
                         English = parts[0],
                         Level = parts[1],
                         Transcription = parts[2],
-                        Russian = parts[3],
-                        Class = parts[4]
+                        // Russian = parts[3],
+                        Class = parts[3]
                     };
-
+                    
                     if (word.Level[0] == level[0] || level == "AllLevels")
                     {
                         words.Add(word);

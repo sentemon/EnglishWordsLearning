@@ -1,7 +1,7 @@
 # EnglishWordsLearning
 
 ## Description
-EnglishWordsLearning is a web application designed to help users learn English words through the use of flashcards and tests. **Currently, words can only be learned from Russian to English.**
+EnglishWordsLearning is a web application designed to help users learn English words through the use of flashcards and tests. The application uses the API from [mymemory.translated.net](https://mymemory.translated.net/) to provide translations. This allows users to translate words from any language to English.
 
 ## Requirements
 - Docker
@@ -23,9 +23,8 @@ Follow these steps to install and run the application:
    ```
 
 3. **Accessing the Application**
-   ```
-   You can access the application via your web browser at http://localhost:8080
-   ```
+   You can access the application via your web browser at [http://localhost:8080](http://localhost:8080).
+
 4. **Stopping the Application**
    ```bash
    docker compose down

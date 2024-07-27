@@ -29,8 +29,8 @@
             <form asp-controller="Test" asp-action="CheckTranslation" method="post" id="translationForm">
                 <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />
                 <div class="form-group">
-                    <label for="russian">Russian Word</label>
-                    <input type="text" class="form-control" id="russian" name="russian" value="@Model?.Russian" readonly />
+                    <label for="translation">User Language Word</label>
+                    <input type="text" class="form-control" id="translation" name="translation" value="@Model.Translation" readonly />
                 </div>
                 <div class="form-group">
                     <label for="userTranslation">Your Translation</label>
