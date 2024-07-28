@@ -158,4 +158,6 @@ public static class LanguageDictionary
     };
     
     public static Dictionary<string, string> GetLanguageDictionary() => _languageDictionary;
+
+    public static string GetLanguage(string key) => _languageDictionary[key];
 }

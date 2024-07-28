@@ -16,7 +16,7 @@ public class TestController : Controller
         _myMemoryService = myMemoryService;
     }
 
-    public async Task<IActionResult> CheckTranslation(string userLanguage = "Ukrainian", string level = "AllLevels")
+    public async Task<IActionResult> CheckTranslation(string userLanguage = "Spanish", string level = "AllLevels")
     {
         if (!LoadWordsHelper.Levels.ContainsKey(level))
         {
@@ -24,17 +24,17 @@ public class TestController : Controller
         }
 
         ViewBag.LanguageDictionary = LanguageDictionary.GetLanguageDictionary();
+        ViewBag.UserLanguage = userLanguage;
         ViewBag.DisplayedLevel = LoadWordsHelper.Levels[level];
         ViewBag.SelectedLevel = level;
 
-        var randomWord = await GetRandomTranslatedWord(userLanguage, level);
+        var randomWord = await GetRandomTranslatedWord(LanguageDictionary.GetLanguage(userLanguage), level);
 
         return View(randomWord);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CheckTranslation(string englishWord, string userTranslation, string level,
-        string userLanguage = "Ukrainian")
+    public async Task<IActionResult> CheckTranslation(string englishWord, string userTranslation, string level, string userLanguage)
     {
         if (!LoadWordsHelper.Levels.ContainsKey(level))
         {
@@ -64,16 +64,18 @@ public class TestController : Controller
 
         // Save correct answers and total questions back to session
         HttpContext.Session.SetString("level", LoadWordsHelper.Levels[level]);
+        HttpContext.Session.SetString("userLanguage", userLanguage);
         HttpContext.Session.SetInt32("correctAnswers", correctAnswers);
         HttpContext.Session.SetInt32("totalQuestions", totalQuestions);
 
         // Pass the result and count to the view
-        ViewBag.CorrectAnswers = correctAnswers;
-        ViewBag.TotalQuestions = totalQuestions;
         ViewBag.DisplayedLevel = LoadWordsHelper.Levels[level];
         ViewBag.SelectedLevel = level;
+        ViewBag.UserLanguage = userLanguage;
+        ViewBag.CorrectAnswers = correctAnswers;
+        ViewBag.TotalQuestions = totalQuestions;
 
-        var randomWord = await GetRandomTranslatedWord(userLanguage, level);
+        var randomWord = await GetRandomTranslatedWord(LanguageDictionary.GetLanguage(userLanguage), level);
 
         return View(randomWord);
     }
@@ -86,12 +88,13 @@ public class TestController : Controller
             int correctAnswers = HttpContext.Session.GetInt32("correctAnswers") ?? 0;
             double resultInPercentage = totalQuestions > 0 ? (double)correctAnswers / totalQuestions * 100 : 0.0;
             string level = HttpContext.Session.GetString("level") ?? "AllLevels";
-            string username = User.Identity.Name;
+            string username = ViewBag.Username;
 
             _historyLogsService.HistoryLogsOfTestsAdd(totalQuestions, correctAnswers, resultInPercentage, username, level);
         }
-
+        
         HttpContext.Session.Remove("level");
+        HttpContext.Session.Remove("userLanguage");
         HttpContext.Session.Remove("correctAnswers");
         HttpContext.Session.Remove("totalQuestions");
 

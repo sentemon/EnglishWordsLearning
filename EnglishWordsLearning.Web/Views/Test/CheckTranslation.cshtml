@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <h2 class="text-center mb-4">Select Level and Translate the Word</h2>
             
-            <form asp-controller="Test" asp-action="CheckTranslation" method="get" id="levelForm">
+            <form asp-controller="Test" asp-action="CheckTranslation" method="get">
                 <div class="form-group">
                     <label for="level">Select Level</label>
                     <select class="form-control" id="level" name="level">
@@ -26,7 +26,7 @@
                     <select class="form-control" id="userLanguage" name="userLanguage">
                         @foreach (var lang in languageDictionary)
                         {
-                            <option value="@lang.Value">@lang.Key</option>
+                            <option value="@lang.Key">@lang.Key</option>
                         }
                     </select>
                 </div>
@@ -40,10 +40,10 @@
 
             <form asp-controller="Test" asp-action="CheckTranslation" method="post" id="translationForm">
                 <input type="hidden" name="level" value="@ViewBag.SelectedLevel" />
-                <input type="hidden" name="userLanguage" value="@ViewBag.SelectedLanguage" />
+                <input type="hidden" name="userLanguage" value="@ViewBag.UserLanguage" />
                 <input type="hidden" name="englishWord" value="@Model.English" />
                 <div class="form-group">
-                    <label for="translation">User Language Word</label>
+                    <label for="translation">@ViewBag.UserLanguage Word</label>
                     <input type="text" class="form-control" id="translation" name="translation" value="@Model.Translation" readonly />
                 </div>
                 <div class="form-group">

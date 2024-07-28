@@ -58,9 +58,16 @@ public static class LoadWordsHelper
     }
 
 
-    public static Word? GetRandomWord(List<Word> words)
+    public static Word GetRandomWord(List<Word> words)
     {
         var random = new Random();
-        return words.MinBy(w => random.Next());
+        var randomWord = words.MinBy(w => random.Next());
+
+        if (randomWord != null)
+        {
+            return randomWord;
+        }
+
+        throw new Exception();
     }
 }
