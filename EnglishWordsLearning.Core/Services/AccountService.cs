@@ -5,7 +5,7 @@ using EnglishWordsLearning.Core.Interfaces;
 using EnglishWordsLearning.Core.Models;
 
 
-namespace EnglishWordsLearning.Application.Services;
+namespace EnglishWordsLearning.Core.Services;
 
 public class AccountService : IAccountService
 {
@@ -24,36 +24,21 @@ public class AccountService : IAccountService
         var users = _accountRepository.LoadUsersFromDb();
         var user = users.FirstOrDefault(u => u.Username == username);
 
-        if (user != null && CheckHashPasswords(password, user.Password))
-        {
-            return true;
-        }
-
-        return false;
+        return user != null && CheckHashPasswords(password, user.Password);
     }
 
     public bool SignUpValidateUserName(string username)
     {
         Regex regexUsername = new Regex(@"^[a-z]+([._]?[a-z0-9]+)*$");
             
-        if (!regexUsername.IsMatch(username))
-        {
-            return false;
-        }
-            
-        return true;
+        return regexUsername.IsMatch(username);
     }
 
     public bool SignUpValidateUserPassword(string password)
     {
-        Regex regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+        var regexPassword = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
 
-        if (!regexPassword.IsMatch(password))
-        {
-            return false;
-        }
-
-        return true;
+        return regexPassword.IsMatch(password);
     }
 
     public bool SignUpValidateUserEmail(string? email)
@@ -63,26 +48,16 @@ public class AccountService : IAccountService
             return false;
         }
 
-        Regex regexEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+        var regexEmail = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
 
-        if (!regexEmail.IsMatch(email))
-        {
-            return false;
-        }
-
-        return true;
+        return regexEmail.IsMatch(email);
     }
 
     public bool SignUpValidateUserFullName(string firstName, string lastName)
     {
-        Regex regexFullName = new Regex(@"^[a-zA-Z]+$");
+        var regexFullName = new Regex(@"^[a-zA-Z]+$");
 
-        if (!regexFullName.IsMatch(firstName) || !regexFullName.IsMatch(lastName))
-        {
-            return false;
-        }
-
-        return true;
+        return regexFullName.IsMatch(firstName) && regexFullName.IsMatch(lastName);
     }
         
     public string HashPassword(string password)

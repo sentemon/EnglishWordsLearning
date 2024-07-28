@@ -7,14 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\EnglishWordsLearning.Core\EnglishWordsLearning.Core.csproj" />
-      <ProjectReference Include="..\EnglishWordsLearning.Infrastructure\EnglishWordsLearning.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label for="userLanguage">Select Language</label>
                     <select class="form-control" id="userLanguage" name="userLanguage">
-                        @foreach (var lang in languageDictionary)
+                        @foreach (var lang in languageDictionary!)
                         {
                             <option value="@lang.Key">@lang.Key</option>
                         }

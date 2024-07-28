@@ -1,4 +1,4 @@
-using EnglishWordsLearning.Application.Services;
+using EnglishWordsLearning.Core.Services;
 using EnglishWordsLearning.Web.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using EnglishWordsLearning.Infrastructure.Data;

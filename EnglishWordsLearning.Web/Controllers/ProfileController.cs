@@ -28,7 +28,7 @@ namespace EnglishWordsLearning.Web.Controllers;
 
             var userDto = new UserDto
             {
-                Username = userProfile.Username,
+                Username = userProfile!.Username,
                 FirstName = userProfile.FirstName,
                 LastName = userProfile.LastName,
                 Email = userProfile.Email
@@ -50,10 +50,10 @@ namespace EnglishWordsLearning.Web.Controllers;
             
             var userDto = new UserDto
             {
-                Username = userProfile.Username,
-                FirstName = userProfile.FirstName,
-                LastName = userProfile.LastName,
-                Email = userProfile.Email
+                Username = userProfile?.Username,
+                FirstName = userProfile?.FirstName,
+                LastName = userProfile?.LastName,
+                Email = userProfile?.Email
             };
             
             return View(userDto);
@@ -69,21 +69,27 @@ namespace EnglishWordsLearning.Web.Controllers;
             }
 
             var user = await _profileService.GetUserProfile(username);
-            
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email;
-            
-            var success = await _profileService.UpdateUserProfile(username, user);
-            
-            if (!success)
+
+            if (user == null)
             {
-                ViewBag.AddModelError("", "Failed to update profile.");
-                
-                return View(model);
+                return RedirectToAction("Index", "Profile");
+            }
+
+            user.FirstName = model.FirstName!;
+            user.LastName = model.LastName!;
+            user.Email = model.Email;
+
+            var success = await _profileService.UpdateUserProfile(username, user);
+
+            if (success)
+            {
+                return RedirectToAction("Index", "Profile");
             }
             
-            return RedirectToAction("Index", "Profile");
+            ViewBag.AddModelError("", "Failed to update profile.");
+
+            return View(model);
+
         }
 
         // [Route("Profile/ChangePassword/{username}")]

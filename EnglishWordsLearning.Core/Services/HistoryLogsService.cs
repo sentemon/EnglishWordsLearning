@@ -1,9 +1,8 @@
 using EnglishWordsLearning.Core.Interfaces;
-using EnglishWordsLearning.Infrastructure.Data;
 using EnglishWordsLearning.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnglishWordsLearning.Application.Services;
+namespace EnglishWordsLearning.Core.Services;
 
 public class HistoryLogsService : IHistoryLogsService
 {

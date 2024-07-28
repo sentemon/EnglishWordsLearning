@@ -2,7 +2,7 @@ using EnglishWordsLearning.Core.Interfaces;
 using EnglishWordsLearning.Core.Models;
 using System.Threading.Tasks;
 
-namespace EnglishWordsLearning.Application.Services
+namespace EnglishWordsLearning.Core.Services
 {
     public class ProfileService : IProfileService
     {

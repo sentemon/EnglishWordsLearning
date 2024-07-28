@@ -21,7 +21,7 @@ public class AccountController : Controller
     {
         var claimsUser = HttpContext.User;
 
-        if (claimsUser.Identity != null && claimsUser.Identity.IsAuthenticated)
+        if (claimsUser.Identity is { IsAuthenticated: true })
         {
             return RedirectToAction("Index", "Home");
         }
@@ -45,7 +45,7 @@ public class AccountController : Controller
                     claims, CookieAuthenticationDefaults.AuthenticationScheme
                 );
 
-                var properties = new AuthenticationProperties()
+                var properties = new AuthenticationProperties
                 {
                     AllowRefresh = true,
                     IsPersistent = modelLogin.KeepLoggedIn
@@ -74,7 +74,6 @@ public class AccountController : Controller
         {
             try
             {
-                // Check if the user fulfills the requirements
                 if (!SignUpValidateUser(model.FirstName, model.LastName, model.Username, model.Password, model.Email))
                 {
                     return View(model);
@@ -89,8 +88,7 @@ public class AccountController : Controller
                     Username = model.Username,
                     Password = _accountService.HashPassword(model.Password)
                 };
-
-                // Add the new user to the database
+                
                 _accountService.SaveUserToDb(newUser);
 
                 return RedirectToAction("SignIn");
@@ -107,7 +105,7 @@ public class AccountController : Controller
             
         return View();
     }
-    //ToDo: wyswietlac dokladny blad
+    
     public bool SignUpValidateUser(string firstName, string lastName, string username, string password, string? email)
     {
         var isUsernameExists = _accountService.IsUsernameExists(username);

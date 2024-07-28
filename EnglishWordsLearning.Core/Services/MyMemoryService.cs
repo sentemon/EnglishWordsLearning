@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using EnglishWordsLearning.Core.Interfaces;
 
-namespace EnglishWordsLearning.Application.Services;
+namespace EnglishWordsLearning.Core.Services;
 
 public class MyMemoryService : IMyMemoryService
 {
