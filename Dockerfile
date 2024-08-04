@@ -31,4 +31,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 # Set the entry point for the container
-ENTRYPOINT ["dotnet", "EnglishWordsLearning.Web.dll"]
+ENTRYPOINT ["dotnet", "EnglishWordsLearning.Web.dll", "migrate"]

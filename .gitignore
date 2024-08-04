@@ -254,7 +254,6 @@ _Pvt_Extensions
 .idea/
 *.sln.iml
 .DS_Store
-.config/
 *.DotSettings.user
 bin/
 obj/
