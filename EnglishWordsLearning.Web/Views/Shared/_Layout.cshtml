@@ -43,6 +43,7 @@
                                 {
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index" asp-route-username="@ViewBag.Username">Profile</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SignOut">Sign Out</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="HistoryLogs" asp-action="HistoryLogsOfTests">History</a></li>
                                 }
                                 @if (User.Identity is { IsAuthenticated: false })
                                 {

@@ -51,7 +51,7 @@ public class TestController : Controller
         if (word != null)
         {
             totalQuestions++;
-            if (word.English.Equals(userTranslation, StringComparison.OrdinalIgnoreCase))
+            if (word.English.Equals(userTranslation.Trim(), StringComparison.OrdinalIgnoreCase))
             {
                 correctAnswers++;
                 ViewBag.Result = "Correct!";
